@@ -1,6 +1,3 @@
 [submodule "Reader/Default/stb"]
 	path = Reader/Default/stb
 	url = https://github.com/nothings/stb.git
-[submodule "cmake/gtest-memleak-detector"]
-	path = cmake/gtest-memleak-detector
-	url = https://github.com/ekcoh/gtest-memleak-detector.git
