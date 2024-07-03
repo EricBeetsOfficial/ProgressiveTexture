@@ -10,6 +10,8 @@ class IReader
  public:
     virtual void open  (const std::string&) = 0;
     virtual void write (const std::string&) = 0;
+    virtual void write (const std::string&, unsigned char*, unsigned int, unsigned int, unsigned int) = 0;
+
 
  public:
     virtual bool           available ( ) const = 0;

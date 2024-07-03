@@ -9,7 +9,7 @@
 
 std::mutex DefaultReader::_mutex;
 
-DefaultReader::DefaultReader()
+DefaultReader::DefaultReader() : _pixels (nullptr)
 {
     DEBUG("DefaultReader Ctr");
 }
@@ -30,7 +30,6 @@ void DefaultReader::open(const std::string& fileName)
     _width = w;
     _height = h;
     _bpp = b;
-
     // unsigned char *resized = resize(512, 512);
     // stbi_image_free(_pixels);
     // _pixels = std::move(resized);
@@ -41,4 +40,9 @@ void DefaultReader::open(const std::string& fileName)
 void DefaultReader::write(const std::string& fileName)
 {
     stbi_write_jpg(fileName.c_str(), width(), height(), bpp(), pixels(), width() * bpp());
+}
+
+void DefaultReader::write(const std::string& fileName, unsigned char* pixels, unsigned int width, unsigned int height, unsigned int bpp)
+{
+    stbi_write_jpg(fileName.c_str(), width, height, bpp, pixels, width * bpp);
 }

@@ -1,4 +1,6 @@
 #include <format>
+#include <vector>
+#include <algorithm>
 #include <TaskWorker.h>
 #include <DefaultReader.h>
 #include <ThreadWorker.h>
@@ -18,7 +20,6 @@ class TextureTasks : public ITasks
         _width {0},
         _height {0},
         _bpp {0},
-        _pixels {nullptr},
         ITasks(texturePath)
     {
         // Read image from disk (threaded)
@@ -32,12 +33,16 @@ class TextureTasks : public ITasks
                 _width = reader->width();
                 _height = reader->height();
                 _bpp = reader->bpp();
-                _pixels = reader->pixels();
+                // Copy pixels, Reader free data
+                auto size = _width * _height * _bpp;
+                _pixels.reserve(size);
+                std::copy(reader->pixels(), reader->pixels() + size, back_inserter(_pixels));
             }
             else
                 ERROR(std::format("Loading texture failed: \"{}\"", _texturePath));
             delete reader;
             this_thread::sleep_for(chrono::milliseconds(3000));
+            write();
             INFO("END loading");
             return true;
         }, true);
@@ -45,9 +50,9 @@ class TextureTasks : public ITasks
         addTask([&]()
         {
             INFO("Resize image ", _texturePath);
-            if (_pixels != nullptr)
-            {
-            }
+            // if (_pixels != nullptr)
+            // {
+            // }
             return true;
         }, true);
         // Split in blocks (threaded)
@@ -77,10 +82,25 @@ class TextureTasks : public ITasks
             return false;
         }, false);
     }
+
+    ~TextureTasks()
+    {
+        _pixels.clear();
+    }
+
+    void write()
+    {
+        IReader *reader = new DefaultReader();
+        DEBUG(_width);
+        DEBUG(_height);
+        DEBUG(_bpp);
+        reader->write("output2.jpg", (unsigned char*)&_pixels[0], _width, _height, _bpp);
+        delete reader;
+    }
  private:
     std::string _texturePath;
     unsigned int _width;
     unsigned int _height;
     unsigned int _bpp;
-    unsigned char* _pixels;
+    std::vector<unsigned char> _pixels;
 };

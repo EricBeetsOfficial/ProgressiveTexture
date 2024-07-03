@@ -44,7 +44,6 @@ int main()
         return false;
     });
     endl(cout);
-
     return 0;
 #if 0
     ThreadWorker worker;

@@ -13,6 +13,7 @@ class DefaultReader : public IReader
  public:
     void open  (const std::string&);
     void write (const std::string&);
+    void write (const std::string&, unsigned char*, unsigned int, unsigned int, unsigned int);
 
  public:
     bool           available ( ) const override { return _available; }

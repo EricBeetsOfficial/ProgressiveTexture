@@ -1,3 +1,4 @@
-[submodule "src/Reader/Default/stb"]
-	path = src/Reader/Default/stb
+[submodule "src/ImageIO/Default/stb"]
+	path = src/ImageIO/Default/stb
 	url = https://github.com/nothings/stb
+
