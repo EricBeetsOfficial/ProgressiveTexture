@@ -14,7 +14,8 @@ add_subdirectory(src/Worker)
 
 
 include_directories(src/Worker)
-include_directories(src/Image/IO src/Image/IO/Default src/Image/IO/Dummy)
+include_directories(src/Image src/Image/IO src/Image/IO/Default src/Image/IO/Dummy)
+include_directories(src/Image/Process src/Image/Process/Default)
 include_directories(src/Utils)
 
 include(CTest)

@@ -27,6 +27,7 @@ void DefaultImageIO::open(const std::string& fileName)
     unsigned char *pixels = stbi_load(fileName.c_str(), &w, &h, &b, 0);
     _pixels = std::shared_ptr<unsigned char>(pixels, [](unsigned char* pixels)
     {
+        // DEBUG()
         stbi_image_free(pixels);
         pixels = nullptr;
     });
@@ -35,11 +36,6 @@ void DefaultImageIO::open(const std::string& fileName)
     _width = w;
     _height = h;
     _bpp = b;
-    // unsigned char *resized = resize(512, 512);
-    // stbi_image_free(_pixels);
-    // _pixels = std::move(resized);
-    // _width = 512;
-    // _height = 512;
 }
 
 void DefaultImageIO::write(const std::string& fileName)
