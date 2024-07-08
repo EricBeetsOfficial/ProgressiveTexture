@@ -17,12 +17,12 @@ class ThreadWorker
  public:
     ThreadWorker() : _currentTask {nullptr}
     {
-        DEBUG("Ctr ");
+        // DEBUG("Ctr ");
     }
 
     ~ThreadWorker()
     {
-        DEBUG("Dtr ");
+        // DEBUG("Dtr ");
     }
  public:
     bool tick()
