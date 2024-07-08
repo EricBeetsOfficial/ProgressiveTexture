@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 3.30)
 project(UnitTest)
 
-message("TEST PROJECT")
-
 # Setup GTest
 include(FetchContent)
 FetchContent_Declare(
@@ -12,20 +10,29 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-# Add test cpp file
-add_executable(HelloTest hello_test.cpp)
+# Build function
+function(BuildTest AppName sources libs)
+  message(${AppName})
+  message("${sources}")
+  add_executable(${AppName} "${sources}")
+  target_link_libraries(${AppName} GTest::gtest_main "${libs}")
+  add_test(${AppName} ${AppName})
+  include(GoogleTest)
+  gtest_discover_tests(${AppName})
+endfunction()
 
-# Link test executable against gtest & gtest_main
-target_link_libraries(HelloTest GTest::gtest_main)
+set(SOURCES_LIST templates.cpp)
+set(LIBS_LIST Utils)
+BuildTest(TestTemplates "${SOURCES_LIST}" "${LIBS_LIST}")
 
-add_test(HelloTest HelloTest)
+set(SOURCES_LIST hello_test.cpp)
+BuildTest(TestHello "${SOURCES_LIST}" "${LIBS_LIST}")
 
-include(GoogleTest)
-gtest_discover_tests(HelloTest)
+set(SOURCES_LIST utils.cpp)
+BuildTest(TestUtils "${SOURCES_LIST}" "${LIBS_LIST}")
 
+add_executable(Image images.cpp)
+target_link_libraries(Image ImageIO Utils)
 
-add_executable(TemplatesTest templates.cpp)
-target_link_libraries(TemplatesTest GTest::gtest_main Utils)
-add_test(TemplatesTest TemplatesTest)
-include(GoogleTest)
-gtest_discover_tests(TemplatesTest)
+add_executable(Thread thread.cpp)
+target_link_libraries(Thread Worker Utils ImageIO)

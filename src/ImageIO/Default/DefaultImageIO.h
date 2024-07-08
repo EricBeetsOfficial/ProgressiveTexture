@@ -2,13 +2,15 @@
 
 #include <vector>
 #include <mutex>
-#include <IReader.h>
+#include <IImageIO.h>
 
-class DefaultReader : public IReader
+class DefaultImageIO : public IImageIO
 {
- public:
-    DefaultReader ( );
-    ~DefaultReader ( );
+   template <typename T, typename U>
+   friend class TFactory;
+ private:
+    DefaultImageIO ( );
+    ~DefaultImageIO ( );
 
  public:
     void open  (const std::string&);
@@ -28,3 +30,6 @@ class DefaultReader : public IReader
    unsigned int _width, _height, _bpp;
    unsigned char *_pixels;
 };
+
+template<typename U = DefaultImageIO>
+using FactoryImageIO = TFactoryImageIO<IImageIO, U>;

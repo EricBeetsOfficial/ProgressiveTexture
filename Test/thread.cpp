@@ -1,8 +1,10 @@
 #include <ThreadWorker.h>
-#include <TextureWorker.h>
+#include <TextureTask.h>
 #include <Random.h>
 #include <Console.h>
 #include <Log.h>
+
+#include <ThreadPool.h>
 
 int main()
 {
@@ -24,46 +26,36 @@ int main()
         std::this_thread::yield();
     }
     cout << "END" << endl;
-#endif
+#else
     Utils::Log::Level(Utils::Log::Level_t::Debug);
+    Utils::InitRand();
 
     ThreadWorker<TextureTasks> workerTest1;
     ThreadWorker<TextureTasks> workerTest2;
+    ThreadWorker<TextureTasks> workerTest3;
     ThreadWorker<TextureTasksTest> workerTest22;
 
 
     workerTest1.addWorker(new TextureTasks("../Test/images/granular.jpg"));
+    workerTest1.addWorker(new TextureTasks("../Test/images/wave.jpg"));
     workerTest2.addWorker(new TextureTasks("q"));
+    workerTest3.addWorker(new TextureTasks("a"));
     workerTest22.addWorker(new TextureTasksTest("tex2"));
 
     Utils::loop([&]()
     {
         workerTest1.tick();
-        // workerTest2.tick();
+        workerTest2.tick();
+        // workerTest3.tick();
         // workerTest22.tick();
+        if (workerTest1.isComplete() && workerTest2.isComplete())
+        {
+            INFO("Worker is completed: EXIT");
+            return true;
+        }
         return false;
     });
     endl(cout);
-    return 0;
-#if 0
-    ThreadWorker worker;
-
-    TextureTasks task10("../Test/images/granular.jpg");
-    Utils::Log::Debug("Task count: ", task10.countTask());
-    TextureTasks task20("../Test/images/wave.jpg");
-    TextureTasks task30("../Test/images/_.jpg");
-
-    worker.addWorker(&task10);
-    worker.addWorker(&task20);
-    worker.addWorker(&task30);
-
-    Utils::loop([&]()
-    {
-        worker.tick();
-        return false;
-        // if (worker.tick())
-        //     return true;
-    });
 #endif
     return 0;
 }

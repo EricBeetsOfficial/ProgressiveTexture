@@ -30,6 +30,7 @@ class ThreadPool
                     // here is to unlock the queue before
                     // executing the task so that other
                     // threads can perform enqueue tasks
+                    if (false)
                     {
                         // Locking the queue so that data
                         // can be shared safely

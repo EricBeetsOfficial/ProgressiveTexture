@@ -1,9 +1,10 @@
-#include <DefaultReader.h>
+#include <DefaultImageIO.h>
 #include <Log.h>
 
 int main()
 {
-    IReader *reader = new DefaultReader();
+    // IImageIO *reader = new DefaultImageIO();
+    IImageIO *reader = FactoryImageIO<>::Create();
     reader->open("Test/images/granular.jpg");
     if (reader->available())
     {

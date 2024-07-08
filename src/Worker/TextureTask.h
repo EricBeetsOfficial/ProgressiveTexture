@@ -2,8 +2,10 @@
 #include <vector>
 #include <algorithm>
 #include <TaskWorker.h>
-#include <DefaultReader.h>
+#include <DefaultImageIO.h>
+#include <DummyImageIO.h>
 #include <ThreadWorker.h>
+#include <Random.h>
 
 class TextureTasksTest
 {
@@ -25,7 +27,7 @@ class TextureTasks : public ITasks
         // Read image from disk (threaded)
         addTask([&]()
         {
-            IReader *reader = new DefaultReader();
+            auto reader = FactoryImageIO<>::Create();
             reader->open(_texturePath);
             if (reader->available())
             {
@@ -42,10 +44,12 @@ class TextureTasks : public ITasks
                 ERROR(std::format("Loading texture failed: \"{}\"", _texturePath));
             delete reader;
             this_thread::sleep_for(chrono::milliseconds(3000));
-            write();
-            INFO("END loading");
+            if (!_pixels.empty())
+                write();
+            INFO("END loading ", _texturePath);
             return true;
         }, true);
+#if 0
         // Resize image (threaded)
         addTask([&]()
         {
@@ -67,6 +71,8 @@ class TextureTasks : public ITasks
             INFO("Create texture ", _texturePath);
             return true;
         }, false);
+#endif
+#if 1
         // Upload blocks (non-threaded)
         addTask([&]()
         {
@@ -74,13 +80,14 @@ class TextureTasks : public ITasks
             if (!count)
                 INFO("Upload blocks ", _texturePath);
             count++;
-            if (count >= 100000)
+            if (count >= 35000)
             {
-                INFO("Upload blocks..done ", _texturePath);
+                INFO("Upload blocks..done ", _texturePath, " ", count);
                 return true;
             }
             return false;
         }, false);
+#endif
     }
 
     ~TextureTasks()
@@ -90,10 +97,10 @@ class TextureTasks : public ITasks
 
     void write()
     {
-        IReader *reader = new DefaultReader();
-        DEBUG(_width);
-        DEBUG(_height);
-        DEBUG(_bpp);
+        IImageIO *reader = FactoryImageIO<>::Create();
+        // DEBUG(_width);
+        // DEBUG(_height);
+        // DEBUG(_bpp);
         reader->write("output2.jpg", (unsigned char*)&_pixels[0], _width, _height, _bpp);
         delete reader;
     }

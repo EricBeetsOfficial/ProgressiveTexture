@@ -4,34 +4,19 @@ project(Test)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-#set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../bin)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../output/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../output/libs)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../output/libs)
 
-## LIBS
-# Utils
-include_directories(src/Utils)
-add_library(Utils STATIC src/Utils/Console.cpp src/Utils/Log.cpp)
-# Reader
-include_directories(src/Reader src/Reader/Default)
-add_library(Reader STATIC src/Reader/IReader.cpp src/Reader/Default/DefaultReader.cpp)
-# Worker
+add_subdirectory(src/Utils)
+add_subdirectory(src/ImageIO)
+add_subdirectory(src/Worker)
+
+
 include_directories(src/Worker)
-add_library(Worker STATIC src/Worker/ThreadWorker.cpp)
+include_directories(src/ImageIO src/ImageIO/Default src/ImageIO/Dummy)
+include_directories(src/Utils)
 
-## TESTS
-# Reader
-add_executable(ReaderTexture Test/reader.cpp)
-target_link_libraries(ReaderTexture Reader Utils)
-# Threads
-add_executable(Thread Test/thread.cpp)
-target_link_libraries(Thread Worker Utils Reader)
-# Templates
-# add_executable(Templates Test/templates.cpp)
-# target_link_libraries(Templates Utils)
-
-# ## UNIT TESTS
 include(CTest)
-# set(CTEST_MEMORYCHECK_TYPE "AddressSanitizer")
-# set(CTEST_MEMORYCHECK_SANITIZER_OPTIONS "verbosity=1:symbolize=1:abort_on_error=1:detect_leaks=1")
-
 enable_testing()
 add_subdirectory(Test)

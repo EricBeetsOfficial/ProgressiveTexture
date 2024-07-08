@@ -84,7 +84,7 @@ private:
     DEFINE_METHOD(priFOO2)
 };
 
-TEST(TemplatesTest, Test01)
+TEST(TestTemplates, Test01)
 {
     MyClass<StandAlone> myStandAlone;
     testing::internal::CaptureStderr();

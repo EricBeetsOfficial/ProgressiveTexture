@@ -1,5 +1,5 @@
 #include <mutex>
-#include <DefaultReader.h>
+#include <DefaultImageIO.h>
 #include <Log.h>
 // https://github.com/nothings/stb
 #define STB_IMAGE_IMPLEMENTATION
@@ -7,23 +7,23 @@
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include <stb/stb_image_write.h>
 
-std::mutex DefaultReader::_mutex;
+std::mutex DefaultImageIO::_mutex;
 
-DefaultReader::DefaultReader() : _pixels (nullptr)
+DefaultImageIO::DefaultImageIO() : _pixels (nullptr)
 {
-    DEBUG("DefaultReader Ctr");
+    // DEBUG("Ctr");
 }
 
-DefaultReader::~DefaultReader()
+DefaultImageIO::~DefaultImageIO()
 {
-    DEBUG("DefaultReader Dtr");
+    // DEBUG("Dtr");
     stbi_image_free(_pixels);
 }
 
-void DefaultReader::open(const std::string& fileName)
+void DefaultImageIO::open(const std::string& fileName)
 {
     std::unique_lock<std::mutex> lock(_mutex);
-    DEBUG("DefaultReader::open ", fileName);
+    // DEBUG(fileName);
     int w, h, b;
     _pixels = stbi_load(fileName.c_str(), &w, &h, &b, 0);
     _available = _pixels != NULL;
@@ -37,12 +37,12 @@ void DefaultReader::open(const std::string& fileName)
     // _height = 512;
 }
 
-void DefaultReader::write(const std::string& fileName)
+void DefaultImageIO::write(const std::string& fileName)
 {
     stbi_write_jpg(fileName.c_str(), width(), height(), bpp(), pixels(), width() * bpp());
 }
 
-void DefaultReader::write(const std::string& fileName, unsigned char* pixels, unsigned int width, unsigned int height, unsigned int bpp)
+void DefaultImageIO::write(const std::string& fileName, unsigned char* pixels, unsigned int width, unsigned int height, unsigned int bpp)
 {
     stbi_write_jpg(fileName.c_str(), width, height, bpp, pixels, width * bpp);
 }

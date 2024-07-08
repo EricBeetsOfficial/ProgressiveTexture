@@ -12,7 +12,11 @@ class ITasks
     template<typename T>
     friend class ThreadWorker;
  public:
-    ITasks(const std::string& name = "") : _name {name}, _currentTask{nullptr, false} { }
+    ITasks(const std::string& name = "") :  _name {name},
+                                            _currentTask {nullptr, false},
+                                            _isDone{false},
+                                            _nonThreadRunning {false},
+                                            _threadRunning {false} { }
 
  public:
     void addTask(std::function<bool()> func, bool threaded)
@@ -25,25 +29,36 @@ class ITasks
     //     return _tasks.size();
     // }
 
-    // bool isEmpty() const
-    // {
-    //     return _tasks.empty();
-    // }
+    bool isEmpty() const
+    {
+        return _tasks.empty();
+    }
 
     bool isRunning() const
     {
         return _currentTask.second ? _threadRunning.load() : _nonThreadRunning;
     }
 
+    bool isDone() const
+    {
+        return _isDone;
+    }
+
+    bool isComplete() const
+    {
+        return !isRunning() && isDone();
+    }
+
  private:
     bool runTasks()
     {
+        // DEBUG();
         if (_currentTask.first == nullptr)
         {
             if (!_tasks.empty())
             {
                 _currentTask = move(_tasks.front());
-                _tasks.pop();
+                _isDone = false;
                 // Threaded task
                 if (_currentTask.second)
                 {
@@ -70,7 +85,9 @@ class ITasks
             else if (!isRunning())
             {
                 DEBUG("Task is Done");
+                _isDone = true;
                 _currentTask.first = nullptr;
+                _tasks.pop();
             }
         }
         return _tasks.empty() && (_currentTask.first == nullptr);
@@ -84,4 +101,5 @@ class ITasks
     std::jthread _thread;
     std::atomic<bool> _threadRunning;
     bool _nonThreadRunning;
+    bool _isDone;
 };

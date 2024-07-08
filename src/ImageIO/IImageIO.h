@@ -1,11 +1,12 @@
 #pragma once
 
 #include <string>
+#include <Factory.h>
 
-class IReader
+class IImageIO
 {
  public:
-    virtual ~IReader ( ) = 0;
+    virtual ~IImageIO ( ) = 0;
 
  public:
     virtual void open  (const std::string&) = 0;
@@ -22,4 +23,12 @@ class IReader
 
  protected:
     unsigned char * resize(int, int);
+};
+
+template<typename T, typename U>
+class TFactoryImageIO : public TFactory<T, U>
+{
+   // Compilation assert
+   static_assert(std::is_base_of<IImageIO, T>::value, "Primary type must derive from IImageIO");
+   static_assert(std::is_base_of<IImageIO, U>::value, "Type must derive from IImageIO");
 };
