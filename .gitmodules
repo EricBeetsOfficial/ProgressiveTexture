@@ -1,4 +1,4 @@
 [submodule "src/ImageIO/Default/stb"]
-	path = src/ImageIO/Default/stb
+	path = src/Image/Default/stb
 	url = https://github.com/nothings/stb
 
