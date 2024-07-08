@@ -9,12 +9,12 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../output/libs)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../output/libs)
 
 add_subdirectory(src/Utils)
-add_subdirectory(src/ImageIO)
+add_subdirectory(src/Image)
 add_subdirectory(src/Worker)
 
 
 include_directories(src/Worker)
-include_directories(src/ImageIO src/ImageIO/Default src/ImageIO/Dummy)
+include_directories(src/Image/IO src/Image/IO/Default src/Image/IO/Dummy)
 include_directories(src/Utils)
 
 include(CTest)

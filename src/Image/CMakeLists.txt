@@ -1,5 +1,5 @@
-project(ImageIO)
+project(Image)
 
-include_directories(. ./Default/ ./Dummy/)
+include_directories(IO IO/Default/ IO/Dummy/)
 include_directories(../Utils)
-add_library(ImageIO STATIC IImageIO.cpp Default/DefaultImageIO.cpp)
+add_library(Image STATIC IO/IImageIO.cpp IO/Default/DefaultImageIO.cpp)

@@ -31,8 +31,8 @@ BuildTest(TestHello "${SOURCES_LIST}" "${LIBS_LIST}")
 set(SOURCES_LIST utils.cpp)
 BuildTest(TestUtils "${SOURCES_LIST}" "${LIBS_LIST}")
 
-add_executable(Image images.cpp)
-target_link_libraries(Image ImageIO Utils)
+add_executable(ImageTest images.cpp)
+target_link_libraries(ImageTest Image Utils)
 
-add_executable(Thread thread.cpp)
-target_link_libraries(Thread Worker Utils ImageIO)
+add_executable(ThreadTest thread.cpp)
+target_link_libraries(ThreadTest Worker Utils Image)
