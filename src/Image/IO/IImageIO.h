@@ -1,28 +1,28 @@
 #pragma once
 
 #include <string>
+#include <memory>
 #include <Factory.h>
 
 class IImageIO
 {
  public:
-    virtual ~IImageIO ( ) = 0;
+   virtual ~IImageIO ( ) = 0;
 
  public:
-    virtual void open  (const std::string&) = 0;
-    virtual void write (const std::string&) = 0;
-    virtual void write (const std::string&, unsigned char*, unsigned int, unsigned int, unsigned int) = 0;
-
+   virtual void open  (const std::string&) { }
+   virtual void write (const std::string&) { }
+   virtual void write (const std::string&, unsigned char*, unsigned int, unsigned int, unsigned int) { }
 
  public:
-    virtual bool           available ( ) const = 0;
-    virtual unsigned char *pixels    ( ) const = 0;
-    virtual unsigned int   width     ( ) const = 0;
-    virtual unsigned int   height    ( ) const = 0;
-    virtual unsigned int   bpp       ( ) const = 0;
+   virtual bool                           available ( ) const { return 0; };
+   virtual std::shared_ptr<unsigned char> pixels    ( ) const { return nullptr; };
+   virtual unsigned int                   width     ( ) const { return 0; };
+   virtual unsigned int                   height    ( ) const { return 0; };
+   virtual unsigned int                   bpp       ( ) const { return 0; };
 
  protected:
-    unsigned char * resize(int, int);
+   unsigned char * resize(int, int);
 };
 
 template<typename T, typename U>

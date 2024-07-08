@@ -7,6 +7,17 @@
 #include <ThreadWorker.h>
 #include <Random.h>
 
+// struct free_delete
+// {
+//     void operator()(void* x)
+//     {
+//         DEBUG("free_delete ", (void*) x);
+//         free(x);
+//         x = nullptr;
+//         DEBUG();
+//     }
+// };
+
 class TextureTasksTest
 {
  public:
@@ -35,16 +46,13 @@ class TextureTasks : public ITasks
                 _width = reader->width();
                 _height = reader->height();
                 _bpp = reader->bpp();
-                // Copy pixels, Reader free data
-                auto size = _width * _height * _bpp;
-                _pixels.reserve(size);
-                std::copy(reader->pixels(), reader->pixels() + size, back_inserter(_pixels));
+                _shared = reader->pixels();
             }
             else
                 ERROR(std::format("Loading texture failed: \"{}\"", _texturePath));
             delete reader;
             this_thread::sleep_for(chrono::milliseconds(3000));
-            if (!_pixels.empty())
+            if (_shared.get() != nullptr)
                 write();
             INFO("END loading ", _texturePath);
             return true;
@@ -92,16 +100,18 @@ class TextureTasks : public ITasks
 
     ~TextureTasks()
     {
-        _pixels.clear();
+        DEBUG();
+        // _pixels.clear();
     }
 
     void write()
     {
-        IImageIO *reader = FactoryImageIO<>::Create();
+        auto reader = FactoryImageIO<>::Create();
         // DEBUG(_width);
         // DEBUG(_height);
         // DEBUG(_bpp);
-        reader->write("output2.jpg", (unsigned char*)&_pixels[0], _width, _height, _bpp);
+        // reader->write("output2.jpg", (unsigned char*)&_pixels[0], _width, _height, _bpp);
+        reader->write("output2.jpg", _shared.get(), _width, _height, _bpp);
         delete reader;
     }
  private:
@@ -109,5 +119,7 @@ class TextureTasks : public ITasks
     unsigned int _width;
     unsigned int _height;
     unsigned int _bpp;
-    std::vector<unsigned char> _pixels;
+    // std::vector<unsigned char> _pixels;
+
+    std::shared_ptr<unsigned char> _shared;
 };

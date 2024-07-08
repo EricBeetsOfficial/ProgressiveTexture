@@ -14,11 +14,10 @@ int main()
     ThreadWorker<TextureTasks> workerTest3;
     ThreadWorker<TextureTasksTest> workerTest22;
 
-
     workerTest1.addWorker(new TextureTasks("../Test/images/granular.jpg"));
     workerTest1.addWorker(new TextureTasks("../Test/images/wave.jpg"));
-    workerTest2.addWorker(new TextureTasks("q"));
-    workerTest3.addWorker(new TextureTasks("a"));
+    // workerTest2.addWorker(new TextureTasks("q"));
+    // workerTest3.addWorker(new TextureTasks("a"));
     workerTest22.addWorker(new TextureTasksTest("tex2"));
 
     Utils::loop([&]()

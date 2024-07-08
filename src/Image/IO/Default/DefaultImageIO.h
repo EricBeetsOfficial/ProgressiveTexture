@@ -18,17 +18,17 @@ class DefaultImageIO : public IImageIO
     void write (const std::string&, unsigned char*, unsigned int, unsigned int, unsigned int);
 
  public:
-    bool           available ( ) const override { return _available; }
-    unsigned char *pixels    ( ) const { return _pixels; }
-    unsigned int   width     ( ) const { return _width; }
-    unsigned int   height    ( ) const { return _height; }
-    unsigned int   bpp       ( ) const { return _bpp; }
+    bool                           available ( ) const override { return _available; }
+    std::shared_ptr<unsigned char> pixels    ( ) const { return _pixels; }
+    unsigned int                   width     ( ) const { return _width; }
+    unsigned int                   height    ( ) const { return _height; }
+    unsigned int                   bpp       ( ) const { return _bpp; }
 
  private:
    static std::mutex _mutex;
    bool _available;
    unsigned int _width, _height, _bpp;
-   unsigned char *_pixels;
+   std::shared_ptr<unsigned char> _pixels;
 };
 
 template<typename U = DefaultImageIO>

@@ -78,7 +78,6 @@ class ITasks
             }
             else if (!isRunning())
             {
-                DEBUG("Task is Done");
                 _isDone = true;
                 _currentProcess.first = nullptr;
                 _processes.pop();
