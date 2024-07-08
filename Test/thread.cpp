@@ -4,29 +4,8 @@
 #include <Console.h>
 #include <Log.h>
 
-#include <ThreadPool.h>
-
 int main()
 {
-#if 0
-    // Create a thread pool with 4 threads
-    ThreadPool pool(1);
-
-    // Enqueue tasks for execution
-    for (int i = 0; i < 20; ++i)
-    {
-        pool.enqueue([i]
-        {
-            int timeout = Utils::Random(1000, 2000);
-            cout << "Task " << i << " is running on thread " << this_thread::get_id() << " (" << timeout << ")" << endl;
-            // Simulate some work
-            this_thread::sleep_for(chrono::milliseconds(timeout));
-        });
-        // this_thread::sleep_for(chrono::milliseconds(100));
-        std::this_thread::yield();
-    }
-    cout << "END" << endl;
-#else
     Utils::Log::Level(Utils::Log::Level_t::Debug);
     Utils::InitRand();
 
@@ -56,6 +35,5 @@ int main()
         return false;
     });
     endl(cout);
-#endif
     return 0;
 }
