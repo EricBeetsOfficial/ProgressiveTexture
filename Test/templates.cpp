@@ -2,14 +2,14 @@
 #include <DynamicTemplate.h>
 #include <Log.h>
 
-class ITasks
+class ITaskWorker
 {
  public:
     template<typename T>
     friend class MyClass;
 public:
-    ITasks() {}
-    virtual ~ITasks() = default;
+    ITaskWorker() {}
+    virtual ~ITaskWorker() = default;
 
 public:
     void pubFOO()
@@ -51,7 +51,7 @@ private:
     }
 };
 
-class TextureTasks : public ITasks
+class TextureTasks : public ITaskWorker
 {
  public:
     virtual ~TextureTasks() = default;

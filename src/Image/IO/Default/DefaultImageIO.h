@@ -1,6 +1,5 @@
 #pragma once
 
-#include <vector>
 #include <mutex>
 #include <IImageIO.h>
 

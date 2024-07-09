@@ -36,64 +36,41 @@ namespace Utils
 {
     class Log
     {
+#pragma region Level
      public:
         enum class Level_t {Error, Warning, Info, Debug};
-        static void Level(Level_t level)
-        {
-            _level = level;
-        }
+
+        static void Level(Level_t level);
 
      private:
         inline static Level_t _level = Level_t::Debug;
+#pragma endregion
 
+#pragma region Ouputs
      public:
         template<typename... Args>
-        static void Debug(Args&&... args)
-        {
-            if (_level >= Level_t::Debug)
-                PRINT("[DEBUG]  ", "BLUE", args);
-        }
+        static void Debug(Args&&... args);
 
         template<typename... Args>
-        static void Info(Args&&... args)
-        {
-            if (_level >= Level_t::Info)
-                PRINT("[INFO]   ", "GREEN", args);
-        }
+        static void Info(Args&&... args);
 
         template<typename... Args>
-        static void Warn(Args&&... args)
-        {
-            if (_level >= Level_t::Warning)
-                PRINT("[WARING] ", "YELLOW", args);
-        }
+        static void Warn(Args&&... args);
 
         template<typename... Args>
-        static void Error(Args&&... args)
-        {
-            if (_level >= Level_t::Error)
-                PRINT("[ERROR]  ", "RED", args);
-        }
+        static void Error(Args&&... args);
 
         template<typename... Args>
-        static void Console(Args&&... args)
-        {
-            std::unique_lock<std::mutex> lock(_mutex); \
-            ((cout << std::forward<Args>(args)), ...);
-        }
+        static void Console(Args&&... args);
+#pragma endregion
 
+#pragma region Color
      private:
         template<typename... Args>
-        static void color(const string &color, std::ostream& out = cout)
-        {
-            cout << "\x1B["<< _colors[color] << "m";
-        }
+        static void color(const string &color, std::ostream& out = cout);
 
-        static void restore(std::ostream& out = cout)
-        {
-            out << "\033[0m\t\t";
-            endl(cout);
-        }
+        static void restore(std::ostream& out = cout);
+#pragma endregion
 
      private:
         static std::mutex _mutex;
@@ -106,3 +83,5 @@ namespace Utils
         };
     };
 }
+
+#include <Log.hpp>

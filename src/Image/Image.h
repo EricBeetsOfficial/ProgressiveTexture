@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include <Log.h>
 #include <Factory.h>
 
 class Image
@@ -10,21 +9,8 @@ class Image
   friend class TFactory;
 
  private:
-    Image(const std::string& filePath, int width, int height, int bpp, unsigned char* pixels)
-    {
-      // DEBUG()
-      _name = filePath;
-      _width = width;
-      _height = height;
-      _bpp = bpp;
-      _pixels = pixels;
-    }
-
-    ~Image()
-    {
-        // DEBUG("Dtr ", _width, " ", _height);
-        free(_pixels);
-    }
+    Image  (const std::string& filePath, int width, int height, int bpp, unsigned char* pixels);
+    ~Image ( );
 
  public:
     bool           available ( ) const { return _pixels != nullptr; }

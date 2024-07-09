@@ -13,10 +13,10 @@ add_subdirectory(src/Image)
 add_subdirectory(src/Worker)
 
 
-include_directories(src/Worker)
+include_directories(src/Worker src/Worker/Task src/Worker/Thread src/Worker/Texture)
 include_directories(src/Image src/Image/IO src/Image/IO/Default src/Image/IO/Dummy)
 include_directories(src/Image/Process src/Image/Process/Default)
-include_directories(src/Utils)
+include_directories(src/Utils src/Utils/Console src/Utils/Log src/Utils/Pattern)
 
 include(CTest)
 enable_testing()

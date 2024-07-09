@@ -1,7 +1,7 @@
 #include <ThreadWorker.h>
 #include <TextureTask.h>
-#include <Math.h>
 #include <Console.h>
+#include <Utils.h>
 #include <Log.h>
 
 int main()

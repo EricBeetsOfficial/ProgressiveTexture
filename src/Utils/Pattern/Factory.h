@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 template <typename T, typename U>
 class TFactory
 {

@@ -1,4 +1,4 @@
 project(Utils)
 
-include_directories(.)
-add_library(Utils STATIC Console.cpp Log.cpp)
+include_directories(. Console Log)
+add_library(Utils STATIC Console/Console.cpp Log/Log.cpp)
