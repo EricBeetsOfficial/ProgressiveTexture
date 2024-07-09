@@ -20,6 +20,12 @@ class ThreadWorker
 
     ~ThreadWorker()
     {
+        auto it = _tasks.begin();
+        while(it != _tasks.end())
+        {
+            delete *it;
+            _tasks.erase(it++);
+        }
     }
  public:
     bool tick()

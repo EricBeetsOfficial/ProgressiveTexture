@@ -5,25 +5,15 @@
 #include <Factory.h>
 #include <Image.h>
 
-class IImageIO
+class IImageIO: public ImageFactory
 {
  public:
     virtual ~IImageIO ( ) = 0 { }
 
  public:
-    virtual void open  (const std::string&) { }
+    virtual std::shared_ptr<Image> open  (const std::string&) { return nullptr; }
     virtual void write (const std::string&) { }
     virtual void write (const std::string&, unsigned char*, unsigned int, unsigned int, unsigned int) { }
-
- public:
-    virtual bool                           available ( ) const { return 0; };
-    virtual std::shared_ptr<unsigned char> pixels    ( ) const { return nullptr; };
-    virtual unsigned int                   width     ( ) const { return 0; };
-    virtual unsigned int                   height    ( ) const { return 0; };
-    virtual unsigned int                   bpp       ( ) const { return 0; };
-
-//  protected:
-//     Image _image;
 };
 
 template<typename T, typename U>

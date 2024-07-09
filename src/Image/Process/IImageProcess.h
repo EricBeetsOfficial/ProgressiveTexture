@@ -2,13 +2,13 @@
 
 #include <Image.h>
 
-class IImageProcess
+class IImageProcess : public ImageFactory
 {
  public:
    virtual ~IImageProcess ( ) = 0 { }
 
  public:
-   virtual void run (Image&, int w, int h) { }
+   virtual void run (std::shared_ptr<Image>& image, int w, int h) { }
 };
 
 template<typename T, typename U>

@@ -14,49 +14,47 @@ class TextureTasksTest
 {
  public:
     TextureTasksTest(const std::string &texturePath = "")
-    {}
+    {
+    }
+
+    ~TextureTasksTest()
+    {
+    }
 };
 
 class TextureTasks : public ITasks
 {
  public:
     TextureTasks(const std::string &texturePath = "") :
-        // _texturePath {std::move(texturePath)},
-        // _width {0},
-        // _height {0},
-        // _bpp {0},
-        _image{std::move(texturePath), 0 , 0, 0, nullptr},
+        _image{nullptr},
         ITasks(texturePath)
     {
+        DEBUG();
         // Read image from disk (threaded)
-        addTask([&]()
+        addTask([&, texturePath]()
         {
             auto reader = FactoryImageIO<>::Create();
-            reader->open(_image._texturePath);
-            if (reader->available())
+            _image = reader->open(texturePath);
+            if (_image->available())
             {
-                INFO("Loaded image from disk texture ", _image._texturePath);
-                _image.width = reader->width();
-                _image.height = reader->height();
-                _image.bpp = reader->bpp();
-                _image._pixels = reader->pixels();
+                INFO("Loaded image from disk texture ", _image->name());
             }
             else
-                ERROR(std::format("Loading texture failed: \"{}\"", _image._texturePath));
+                ERROR(std::format("Loading texture failed: \"{}\"", _image->name()));
             delete reader;
             this_thread::sleep_for(chrono::milliseconds(3000));
-            INFO("END loading ", _image._texturePath);
+            INFO("END loading ", _image->name());
             return true;
         }, true);
         // Resize image (threaded)
         addTask([&]()
         {
-            if (_image._pixels.get() != nullptr)
+            if (_image->available())
             {
-                INFO("Resize image ", _image._texturePath);
+                INFO("Resize image ", _image->name());
                 auto resizer = FactoryImageProcess<>::Create();
-                int width = Utils::SmallestPowerOf2(_image.width);
-                int height = Utils::SmallestPowerOf2(_image.height);
+                int width = Utils::SmallestPowerOf2(_image->width());
+                int height = Utils::SmallestPowerOf2(_image->height());
                 resizer->run(_image, width, height);
                 delete resizer;
             }
@@ -65,11 +63,11 @@ class TextureTasks : public ITasks
         // Write resized image (threaded)
         addTask([&]()
         {
-            if (_image._pixels.get() != nullptr)
+            if (_image->available())
             {
-                INFO("Write Image on disk ", _image._texturePath);
+                INFO("Write Image on disk ", _image->name());
                 auto reader = FactoryImageIO<>::Create();
-                reader->write("output_" + Utils::FileName(_image._texturePath) + ".jpg", _image._pixels.get(), _image.width, _image.height, _image.bpp);
+                reader->write("output_" + Utils::FileName(_image->name()) + ".jpg", _image->pixels(), _image->width(), _image->height(), _image->bpp());
                 delete reader;
             }
             return true;
@@ -94,11 +92,11 @@ class TextureTasks : public ITasks
         {
             static int count = 0;
             if (!count)
-                INFO("Upload blocks ", _image._texturePath);
+                INFO("Upload blocks ", _image->name());
             count++;
             if (count >= 35000)
             {
-                INFO("Upload blocks..done ", _image._texturePath, " ", count);
+                INFO("Upload blocks..done ", _image->name(), " ", count);
                 return true;
             }
             return false;
@@ -112,5 +110,5 @@ class TextureTasks : public ITasks
     }
 
  private:
-    Image _image;
+    std::shared_ptr<Image> _image;
 };

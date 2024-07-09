@@ -5,12 +5,12 @@ int main()
 {
     // IImageIO *reader = new DefaultImageIO();
     IImageIO *reader = FactoryImageIO<>::Create();
-    reader->open("Test/images/granular.jpg");
-    if (reader->available())
+    auto image = reader->open("Test/images/granular.jpg");
+    if (image->available())
     {
-        Utils::Log::Debug(reader->width());
-        Utils::Log::Debug(reader->height());
-        Utils::Log::Debug(reader->bpp());
+        Utils::Log::Debug(image->width());
+        Utils::Log::Debug(image->height());
+        Utils::Log::Debug(image->bpp());
         reader->write("Test/images/output.jpg");
     }
     delete reader;
