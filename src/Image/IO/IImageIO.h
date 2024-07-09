@@ -1,14 +1,12 @@
 #pragma once
 
-#include <string>
-#include <memory>
-#include <ImageFactory.h>
 #include <Factory.h>
 #include <Image.h>
 
-class IImageIO: public ImageFactory
+class IImageIO
 {
  public:
+    IImageIO() {}
     virtual ~IImageIO ( ) = 0 { }
 
  public:

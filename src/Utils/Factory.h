@@ -4,8 +4,16 @@ template <typename T, typename U>
 class TFactory
 {
  public:
-   static T* Create()
+
+    virtual ~TFactory() = default;
+
+   template <typename... Args>
+   static std::shared_ptr<T> Create(Args&&... args)
    {
-      return new U;
+      // Use a deleter to allows class U has private ctr/dtr
+      return std::shared_ptr<T>(new U(std::forward<Args>(args)...), [](T* ptr)
+      {
+         delete ptr;
+      });
    }
 };

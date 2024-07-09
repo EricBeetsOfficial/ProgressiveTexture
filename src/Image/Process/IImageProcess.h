@@ -1,8 +1,9 @@
 #pragma once
 
+#include <Factory.h>
 #include <Image.h>
 
-class IImageProcess : public ImageFactory
+class IImageProcess
 {
  public:
    virtual ~IImageProcess ( ) = 0 { }

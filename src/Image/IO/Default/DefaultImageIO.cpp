@@ -25,8 +25,7 @@ std::shared_ptr<Image> DefaultImageIO::open(const std::string& fileName)
     std::unique_lock<std::mutex> lock(_mutex);
     int w, h, b;
     unsigned char* pixels = stbi_load(fileName.c_str(), &w, &h, &b, 0);
-    _image = createImage(fileName, w, h, b, pixels);
-    return _image;
+    return FactoryImage::Create(fileName, w, h, b, pixels);
 }
 
 void DefaultImageIO::write(const std::string& fileName)

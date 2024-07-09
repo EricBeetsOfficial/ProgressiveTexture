@@ -3,8 +3,7 @@
 
 int main()
 {
-    // IImageIO *reader = new DefaultImageIO();
-    IImageIO *reader = FactoryImageIO<>::Create();
+    auto reader = FactoryImageIO<>::Create();
     auto image = reader->open("Test/images/granular.jpg");
     if (image->available())
     {
@@ -13,6 +12,5 @@ int main()
         Utils::Log::Debug(image->bpp());
         reader->write("Test/images/output.jpg");
     }
-    delete reader;
     return 0;
 }

@@ -2,17 +2,22 @@
 
 #include <string>
 #include <Log.h>
-
-class IImageIO;
+#include <Factory.h>
 
 class Image
 {
-    friend class ImageFactory;
+  template<typename T, typename U>
+  friend class TFactory;
 
- public:
-    Image()
+ private:
+    Image(const std::string& filePath, int width, int height, int bpp, unsigned char* pixels)
     {
-        // DEBUG("Ctr");
+      // DEBUG()
+      _name = filePath;
+      _width = width;
+      _height = height;
+      _bpp = bpp;
+      _pixels = pixels;
     }
 
     ~Image()
@@ -29,7 +34,6 @@ class Image
     unsigned int   height    ( ) const { return _height; };
     unsigned int   bpp       ( ) const { return _bpp; };
 
-
  private:
     std::string _name;
     unsigned int _width;
@@ -37,3 +41,5 @@ class Image
     unsigned int _bpp;
     unsigned char* _pixels;
 };
+
+using FactoryImage = TFactory<Image, Image>;
