@@ -2,6 +2,7 @@
 
 #include <string>
 #include <memory>
+#include <ImageFactory.h>
 #include <Factory.h>
 #include <Image.h>
 
