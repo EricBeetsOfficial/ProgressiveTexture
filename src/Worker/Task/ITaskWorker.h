@@ -4,9 +4,6 @@
 #include <thread>
 #include <functional>
 
-template<typename T>
-class ThreadWorker;
-
 class ITaskWorker
 {
     template<typename T>

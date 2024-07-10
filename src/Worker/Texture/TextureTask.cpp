@@ -27,7 +27,7 @@ TextureTasks::TextureTasks(const std::string &texturePath) : _image{nullptr},
         }
         else
             ERROR(std::format("Loading texture failed: \"{}\"", texturePath));
-        this_thread::sleep_for(chrono::milliseconds(3000));
+        std::this_thread::sleep_for(std::chrono::milliseconds(3000));
         INFO("END loading ", texturePath);
         return true;
     }, true);

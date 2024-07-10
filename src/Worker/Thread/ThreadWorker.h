@@ -7,9 +7,6 @@
 #include <Log.h>
 #include <DynamicTemplate.h>
 
-using namespace std;
-using namespace Utils;
-
 template <typename T>
 class ThreadWorker
 {
@@ -24,7 +21,7 @@ class ThreadWorker
 
  private:
     T* _currentTask;
-    mutex _mutex;
+    std::mutex _mutex;
     std::unordered_set<T*> _tasks;
 
     DEFINE_METHOD(runTasks)

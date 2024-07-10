@@ -19,7 +19,7 @@ ThreadWorker<T>::~ThreadWorker()
 template <typename T>
 bool ThreadWorker<T>::tick()
 {
-    unique_lock<std::mutex> lock(_mutex);
+    std::unique_lock<std::mutex> lock(_mutex);
     std::unordered_set<T*> taskToRemove;
     for (auto const task: _tasks)
     {
@@ -45,7 +45,7 @@ bool ThreadWorker<T>::tick()
 template <typename T>
 void ThreadWorker<T>::addWorker(T* task)
 {
-    unique_lock<std::mutex> lock(_mutex);
+    std::unique_lock<std::mutex> lock(_mutex);
     _tasks.insert(std::move(task));
 }
 
