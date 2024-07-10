@@ -8,6 +8,7 @@
 #include <DefaultImageIO.h>
 #include <DummyImageIO.h>
 #include <DefaultImageProcess.h>
+#include <Block.h>
 
 #include <ThreadWorker.h>
 #include <Utils.h>
@@ -55,13 +56,16 @@ TextureTasks::TextureTasks(const std::string &texturePath) : _image{nullptr},
         }
         return true;
     }, true);
-#if 0
+#if 1
     // Split in blocks (threaded)
     addTask([&]()
     {
-        INFO("Split in blocks ", _texturePath);
+        INFO("Split in blocks ", texturePath);
+        auto block = FactoryBlock::Create();
         return true;
     }, true);
+#endif
+#if 0
     // Create empty texture (non-threaded)
     addTask([&]()
     {

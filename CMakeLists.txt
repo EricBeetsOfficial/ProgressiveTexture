@@ -11,6 +11,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../output/libs)
 add_subdirectory(src/Utils)
 add_subdirectory(src/Image)
 add_subdirectory(src/Worker)
+add_subdirectory(src/Block)
 
 
 include_directories(src/Worker src/Worker/Task src/Worker/Thread src/Worker/Texture)

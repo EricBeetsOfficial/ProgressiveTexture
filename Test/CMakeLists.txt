@@ -35,4 +35,4 @@ add_executable(ImageTest images.cpp)
 target_link_libraries(ImageTest Image Utils)
 
 add_executable(ThreadTest thread.cpp)
-target_link_libraries(ThreadTest Worker Utils Image)
+target_link_libraries(ThreadTest Worker Utils Image Block)

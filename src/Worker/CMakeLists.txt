@@ -10,6 +10,7 @@ include_directories(. Task
                     ../Image/IO/Dummy
                     ../Image/Process/
                     ../Image/Process/Default
+                    ../Block
                     Texture
                     Task
                     Thread)
