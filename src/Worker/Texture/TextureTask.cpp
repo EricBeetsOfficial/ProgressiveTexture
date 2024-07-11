@@ -7,7 +7,7 @@
 #include <Log.h>
 #include <DefaultImageIO.h>
 #include <DummyImageIO.h>
-#include <DefaultImageProcess.h>
+#include <ResizerImageProcess.h>
 #include <SplitterImageProcess.h>
 #include <Block.h>
 
@@ -39,7 +39,7 @@ TextureTasks::TextureTasks(const std::string &texturePath) : _image{nullptr},
         if ((_image != nullptr) && _image->available())
         {
             INFO("Resize image ", _image->name());
-            auto resizer = Factory::Create<DefaultImageProcess>();
+            auto resizer = Factory::Create<ResizerImageProcess>();
             int width = Utils::SmallestPowerOf2(_image->width());
             int height = Utils::SmallestPowerOf2(_image->height());
             resizer->run(_image, width, height);

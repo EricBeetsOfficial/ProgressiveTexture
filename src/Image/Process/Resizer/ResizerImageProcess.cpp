@@ -1,20 +1,20 @@
 #define STB_IMAGE_RESIZE_IMPLEMENTATION
 #include <stb/stb_image_resize2.h>
 
-#include <DefaultImageProcess.h>
+#include <ResizerImageProcess.h>
 #include <Log.h>
 
-DefaultImageProcess::DefaultImageProcess()
+ResizerImageProcess::ResizerImageProcess()
 {
     DEBUG("Ctr")
 }
 
-DefaultImageProcess::~DefaultImageProcess()
+ResizerImageProcess::~ResizerImageProcess()
 {
     DEBUG("Dtr")
 }
 
-void DefaultImageProcess::run(std::shared_ptr<Image>& image,  int w, int h)
+void ResizerImageProcess::run(std::shared_ptr<Image>& image,  int w, int h)
 {
     unsigned char* resized = (unsigned char*)malloc(sizeof(unsigned char) * w * h * image->bpp());
     stbir_resize_uint8_linear(image->pixels(), image->width(), image->height(), 0, resized, w, h, 0, (stbir_pixel_layout)image->bpp());
