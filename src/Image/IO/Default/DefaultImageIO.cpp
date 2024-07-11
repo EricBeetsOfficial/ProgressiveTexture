@@ -12,12 +12,12 @@ std::mutex DefaultImageIO::_mutex;
 
 DefaultImageIO::DefaultImageIO()
 {
-    // DEBUG("Ctr");
+    DEBUG("Ctr");
 }
 
 DefaultImageIO::~DefaultImageIO()
 {
-    // DEBUG("Dtr");
+    DEBUG("Dtr");
 }
 
 std::shared_ptr<Image> DefaultImageIO::open(const std::string& fileName)
@@ -25,7 +25,8 @@ std::shared_ptr<Image> DefaultImageIO::open(const std::string& fileName)
     std::unique_lock<std::mutex> lock(_mutex);
     int w, h, b;
     unsigned char* pixels = stbi_load(fileName.c_str(), &w, &h, &b, 0);
-    return FactoryImage::Create(fileName, w, h, b, pixels);
+    // return FactoryImage::Create(fileName, w, h, b, pixels);
+    return Factory::Create<Image>(fileName, w, h, b, pixels);
 }
 
 void DefaultImageIO::write(const std::string& fileName)

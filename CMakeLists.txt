@@ -16,7 +16,7 @@ add_subdirectory(src/Block)
 
 include_directories(src/Worker src/Worker/Task src/Worker/Thread src/Worker/Texture)
 include_directories(src/Image src/Image/IO src/Image/IO/Default src/Image/IO/Dummy)
-include_directories(src/Image/Process src/Image/Process/Default)
+include_directories(src/Image/Process src/Image/Process/Default src/Image/Process/Splitter)
 include_directories(src/Utils src/Utils/Console src/Utils/Log src/Utils/Pattern)
 
 include(CTest)

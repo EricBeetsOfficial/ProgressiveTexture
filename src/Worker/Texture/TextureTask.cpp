@@ -8,6 +8,7 @@
 #include <DefaultImageIO.h>
 #include <DummyImageIO.h>
 #include <DefaultImageProcess.h>
+#include <SplitterImageProcess.h>
 #include <Block.h>
 
 #include <ThreadWorker.h>
@@ -20,7 +21,7 @@ TextureTasks::TextureTasks(const std::string &texturePath) : _image{nullptr},
     // Read image from disk (threaded)
     addTask([&, texturePath]()
     {
-        auto reader = FactoryImageIO<>::Create();
+        auto reader = FactoryImageIO<>();
         _image = reader->open(texturePath);
         if ((_image != nullptr) && _image->available())
         {
@@ -28,7 +29,7 @@ TextureTasks::TextureTasks(const std::string &texturePath) : _image{nullptr},
         }
         else
             ERROR(std::format("Loading texture failed: \"{}\"", texturePath));
-        std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+        // std::this_thread::sleep_for(std::chrono::milliseconds(3000));
         INFO("END loading ", texturePath);
         return true;
     }, true);
@@ -38,7 +39,7 @@ TextureTasks::TextureTasks(const std::string &texturePath) : _image{nullptr},
         if ((_image != nullptr) && _image->available())
         {
             INFO("Resize image ", _image->name());
-            auto resizer = FactoryImageProcess<>::Create();
+            auto resizer = Factory::Create<DefaultImageProcess>();
             int width = Utils::SmallestPowerOf2(_image->width());
             int height = Utils::SmallestPowerOf2(_image->height());
             resizer->run(_image, width, height);
@@ -51,7 +52,8 @@ TextureTasks::TextureTasks(const std::string &texturePath) : _image{nullptr},
         if ((_image != nullptr) && _image->available())
         {
             INFO("Write Image on disk ", _image->name());
-            auto reader = FactoryImageIO<>::Create();
+            //auto reader = FactoryImageIO<>::Create();
+            auto reader = FactoryImageIO<>();
             reader->write("output_" + Utils::FileName(_image->name()) + ".jpg", _image->pixels(), _image->width(), _image->height(), _image->bpp());
         }
         return true;
@@ -61,7 +63,11 @@ TextureTasks::TextureTasks(const std::string &texturePath) : _image{nullptr},
     addTask([&]()
     {
         INFO("Split in blocks ", texturePath);
-        auto block = FactoryBlock::Create();
+        // auto block = FactoryBlock::Create();
+        auto block = Factory::Create<Block>();
+        // auto splitter = FactoryImageProcess<SplitterImageProcess>::Create();
+        auto splitter = Factory::Create<SplitterImageProcess>();
+        splitter->run(_image);
         return true;
     }, true);
 #endif

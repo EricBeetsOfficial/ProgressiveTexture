@@ -4,12 +4,9 @@
 
 class Block
 {
-  template<typename T, typename U>
-  friend class TFactory;
+   friend class Factory;
 
  private:
     Block();
     ~Block();
 };
-
-using FactoryBlock = TFactory<Block, Block>;

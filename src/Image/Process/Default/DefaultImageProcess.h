@@ -1,13 +1,11 @@
 #pragma once
 
 #include <memory>
-#include <IImageProcess.h>
+#include <Image.h>
 
-class DefaultImageProcess : public IImageProcess
+class DefaultImageProcess
 {
-    template <typename T, typename U>
-    friend class TFactory;
-
+   friend class Factory;
  private:
     DefaultImageProcess  ( );
     ~DefaultImageProcess ( );
@@ -15,6 +13,3 @@ class DefaultImageProcess : public IImageProcess
  public:
     void run (std::shared_ptr<Image>& image,  int w, int h);
 };
-
-template<typename U = DefaultImageProcess>
-using FactoryImageProcess = TFactoryImageProcess<IImageProcess, U>;

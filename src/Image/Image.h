@@ -5,9 +5,9 @@
 
 class Image
 {
-  template<typename T, typename U>
-  friend class TFactory;
-
+//   template<typename T>
+//   friend class Factory;
+   friend class Factory;
  private:
     Image  (const std::string& filePath, int width, int height, int bpp, unsigned char* pixels);
     ~Image ( );
@@ -28,4 +28,4 @@ class Image
     unsigned char* _pixels;
 };
 
-using FactoryImage = TFactory<Image, Image>;
+// using FactoryImage = Factory<Image>;
