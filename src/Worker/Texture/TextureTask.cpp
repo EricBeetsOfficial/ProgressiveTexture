@@ -29,7 +29,7 @@ TextureTasks::TextureTasks(const std::string &texturePath) : _image{nullptr},
         }
         else
             ERROR(std::format("Loading texture failed: \"{}\"", texturePath));
-        // std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+        std::this_thread::sleep_for(std::chrono::milliseconds(2000));
         INFO("END loading ", texturePath);
         return true;
     }, true);
@@ -52,7 +52,6 @@ TextureTasks::TextureTasks(const std::string &texturePath) : _image{nullptr},
         if ((_image != nullptr) && _image->available())
         {
             INFO("Write Image on disk ", _image->name());
-            //auto reader = FactoryImageIO<>::Create();
             auto reader = FactoryImageIO<>();
             reader->write("output_" + Utils::FileName(_image->name()) + ".jpg", _image->pixels(), _image->width(), _image->height(), _image->bpp());
         }
@@ -63,9 +62,7 @@ TextureTasks::TextureTasks(const std::string &texturePath) : _image{nullptr},
     addTask([&]()
     {
         INFO("Split in blocks ", texturePath);
-        // auto block = FactoryBlock::Create();
         auto block = Factory::Create<Block>();
-        // auto splitter = FactoryImageProcess<SplitterImageProcess>::Create();
         auto splitter = Factory::Create<SplitterImageProcess>();
         splitter->run(_image);
         return true;
