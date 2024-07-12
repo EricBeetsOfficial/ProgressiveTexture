@@ -5,9 +5,7 @@
 
 class DefaultImageIO : public IImageIO
 {
-   template <typename T, typename U>
-   friend class TFactory;
-
+   friend class Factory;
  private:
     DefaultImageIO ( );
     ~DefaultImageIO ( );
@@ -21,6 +19,3 @@ class DefaultImageIO : public IImageIO
    static std::mutex _mutex;
    std::shared_ptr<Image> _image;
 };
-
-template<typename U = DefaultImageIO>
-using FactoryImageIO = TFactoryImageIO<IImageIO, U>;

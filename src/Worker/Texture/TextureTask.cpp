@@ -7,7 +7,7 @@
 #include <Log.h>
 #include <DefaultImageIO.h>
 #include <DummyImageIO.h>
-#include <DefaultImageProcess.h>
+#include <ResizerImageProcess.h>
 
 #include <ThreadWorker.h>
 #include <Utils.h>
@@ -19,7 +19,7 @@ TextureTasks::TextureTasks(const std::string &texturePath) : _image{nullptr},
     // Read image from disk (threaded)
     addTask([&, texturePath]()
     {
-        auto reader = FactoryImageIO<>::Create();
+        auto reader = FactoryImageIO<>();
         _image = reader->open(texturePath);
         if ((_image != nullptr) && _image->available())
         {
@@ -27,7 +27,7 @@ TextureTasks::TextureTasks(const std::string &texturePath) : _image{nullptr},
         }
         else
             ERROR(std::format("Loading texture failed: \"{}\"", texturePath));
-        std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+        std::this_thread::sleep_for(std::chrono::milliseconds(2000));
         INFO("END loading ", texturePath);
         return true;
     }, true);
@@ -37,31 +37,39 @@ TextureTasks::TextureTasks(const std::string &texturePath) : _image{nullptr},
         if ((_image != nullptr) && _image->available())
         {
             INFO("Resize image ", _image->name());
-            auto resizer = FactoryImageProcess<>::Create();
+            auto resizer = Factory::Create<ResizerImageProcess>();
             int width = Utils::SmallestPowerOf2(_image->width());
             int height = Utils::SmallestPowerOf2(_image->height());
             resizer->run(_image, width, height);
         }
         return true;
     }, true);
-    // Write resized image (threaded)
+#if !NDEBUG
+    // Debug: Write resized image (threaded)
     addTask([&]()
     {
         if ((_image != nullptr) && _image->available())
         {
             INFO("Write Image on disk ", _image->name());
-            auto reader = FactoryImageIO<>::Create();
+            auto reader = FactoryImageIO<>();
             reader->write("output_" + Utils::FileName(_image->name()) + ".jpg", _image->pixels(), _image->width(), _image->height(), _image->bpp());
         }
         return true;
     }, true);
-#if 0
+#endif
+#if 1
     // Split in blocks (threaded)
     addTask([&]()
     {
-        INFO("Split in blocks ", _texturePath);
+        INFO("Split in blocks ", texturePath);
+        _splitter = Factory::Create<SplitterImageProcess>();
+        _splitter->run(_image);
+        // Release the image
+        _image.reset();
         return true;
     }, true);
+#endif
+#if 0
     // Create empty texture (non-threaded)
     addTask([&]()
     {

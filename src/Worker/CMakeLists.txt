@@ -8,8 +8,10 @@ include_directories(. Task
                     ../Image/IO
                     ../Image/IO/Default
                     ../Image/IO/Dummy
+                    ../Image/Process/Resizer
+                    ../Image/Process/Splitter
                     ../Image/Process/
-                    ../Image/Process/Default
+                    ../Block
                     Texture
                     Task
                     Thread)

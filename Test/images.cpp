@@ -3,7 +3,7 @@
 
 int main()
 {
-    auto reader = FactoryImageIO<>::Create();
+    auto reader = FactoryImageIO<>();
     auto image = reader->open("Test/images/granular.jpg");
     if (image->available())
     {
