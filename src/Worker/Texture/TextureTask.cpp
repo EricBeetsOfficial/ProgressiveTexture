@@ -8,8 +8,6 @@
 #include <DefaultImageIO.h>
 #include <DummyImageIO.h>
 #include <ResizerImageProcess.h>
-#include <SplitterImageProcess.h>
-#include <Block.h>
 
 #include <ThreadWorker.h>
 #include <Utils.h>
@@ -46,7 +44,8 @@ TextureTasks::TextureTasks(const std::string &texturePath) : _image{nullptr},
         }
         return true;
     }, true);
-    // Write resized image (threaded)
+#if !NDEBUG
+    // Debug: Write resized image (threaded)
     addTask([&]()
     {
         if ((_image != nullptr) && _image->available())
@@ -57,14 +56,16 @@ TextureTasks::TextureTasks(const std::string &texturePath) : _image{nullptr},
         }
         return true;
     }, true);
+#endif
 #if 1
     // Split in blocks (threaded)
     addTask([&]()
     {
         INFO("Split in blocks ", texturePath);
-        auto block = Factory::Create<Block>();
-        auto splitter = Factory::Create<SplitterImageProcess>();
-        splitter->run(_image);
+        _splitter = Factory::Create<SplitterImageProcess>();
+        _splitter->run(_image);
+        // Release the image
+        _image.reset();
         return true;
     }, true);
 #endif

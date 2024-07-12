@@ -1,14 +1,22 @@
 #include <Image.h>
 #include <Log.h>
 
-Image::Image(const std::string& filePath, int width, int height, int bpp, unsigned char* pixels)
+Image::Image(const std::string& filePath, unsigned int width, unsigned int height, unsigned int bpp, unsigned char* pixels) : _name {filePath},
+                                                                                                                              _width {width},
+                                                                                                                              _height {height},
+                                                                                                                              _bpp {bpp},
+                                                                                                                              _pixels {pixels}
 {
     // DEBUG()
-    _name = filePath;
-    _width = width;
-    _height = height;
-    _bpp = bpp;
-    _pixels = pixels;
+}
+
+Image::Image(unsigned int width, unsigned int height, unsigned int bpp, unsigned char* pixels) : _width {width},
+                                                                                                 _height {height},
+                                                                                                 _bpp {bpp},
+                                                                                                 _pixels {pixels}
+
+{
+    // DEBUG()
 }
 
 Image::~Image()

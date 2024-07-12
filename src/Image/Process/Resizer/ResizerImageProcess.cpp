@@ -6,12 +6,12 @@
 
 ResizerImageProcess::ResizerImageProcess()
 {
-    DEBUG("Ctr")
+    // DEBUG("Ctr")
 }
 
 ResizerImageProcess::~ResizerImageProcess()
 {
-    DEBUG("Dtr")
+    // DEBUG("Dtr")
 }
 
 void ResizerImageProcess::run(std::shared_ptr<Image>& image,  int w, int h)

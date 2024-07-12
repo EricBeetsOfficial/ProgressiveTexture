@@ -17,5 +17,7 @@ class IImageIO
     virtual void write (const std::string&, unsigned char*, unsigned int, unsigned int, unsigned int) { }
 };
 
+#include <DefaultImageIO.h>
+
 template <typename T = DefaultImageIO>
 constexpr auto(*FactoryImageIO)() = &Factory::Create<IImageIO, T>;

@@ -1,6 +1,7 @@
 #include <string>
-#include <Image.h>
 #include <ITaskWorker.h>
+#include <Image.h>
+#include <SplitterImageProcess.h>
 
 class TextureTasksTest
 {
@@ -17,4 +18,5 @@ class TextureTasks : public ITaskWorker
 
  private:
     std::shared_ptr<Image> _image;
+    std::shared_ptr<SplitterImageProcess> _splitter;
 };

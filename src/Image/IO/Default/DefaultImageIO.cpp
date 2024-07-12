@@ -12,12 +12,12 @@ std::mutex DefaultImageIO::_mutex;
 
 DefaultImageIO::DefaultImageIO()
 {
-    DEBUG("Ctr");
+    // DEBUG("Ctr");
 }
 
 DefaultImageIO::~DefaultImageIO()
 {
-    DEBUG("Dtr");
+    // DEBUG("Dtr");
 }
 
 std::shared_ptr<Image> DefaultImageIO::open(const std::string& fileName)
