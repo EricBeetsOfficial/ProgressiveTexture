@@ -51,8 +51,7 @@ TextureTasks::TextureTasks(const std::string &texturePath) : _image{nullptr},
         if ((_image != nullptr) && _image->available())
         {
             INFO("Write Image on disk ", _image->name());
-            auto reader = FactoryImageIO<>();
-            reader->write("output_" + Utils::FileName(_image->name()) + ".jpg", _image->pixels(), _image->width(), _image->height(), _image->bpp());
+            FactoryImageIO<>()->write("output_" + Utils::FileName(_image->name()) + ".jpg", _image->pixels(), _image->width(), _image->height(), _image->bpp());
         }
         return true;
     }, true);

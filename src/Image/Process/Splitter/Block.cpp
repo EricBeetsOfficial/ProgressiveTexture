@@ -20,8 +20,7 @@ Block::Block(int width, int height, int countX, int countY, std::shared_ptr<Imag
     for (int y = 0; y < height; ++y, src += rowStepImage, dst += rowStepBlock)
         memcpy(dst, src, rowStepBlock);
     // Debug: save blocks
-    // auto writer = FactoryImageIO<>();
-    // writer->write("output_" + std::to_string(countX) + "_" + std::to_string(countY) + ".jpg", _image->pixels(), _image->width(), _image->height(), _image->bpp());
+    // FactoryImageIO<>()->write("output_" + std::to_string(countX) + "_" + std::to_string(countY) + ".jpg", _image->pixels(), _image->width(), _image->height(), _image->bpp());
 }
 
 Block::~Block()
