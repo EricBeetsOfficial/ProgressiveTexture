@@ -11,7 +11,7 @@ include_directories(. Task
                     ../Image/Process/Resizer
                     ../Image/Process/Splitter
                     ../Image/Process/
-                    ../Block
+                    ../Texture
                     Texture
                     Task
                     Thread)
