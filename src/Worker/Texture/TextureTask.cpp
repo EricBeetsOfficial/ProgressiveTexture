@@ -73,7 +73,7 @@ TextureTasks::TextureTasks(const std::string &texturePath) : _image{nullptr},
     addTask([&]()
     {
         INFO("Create texture ", texturePath);
-        auto texture = Factory::Create<Texture>();
+        // auto texture0 = Factory::Create<Texture<GraphicsAPI::OpenGL>>();
         return true;
     }, false);
 #endif
