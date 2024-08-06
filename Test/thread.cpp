@@ -35,5 +35,13 @@ int main()
         return false;
     });
     endl(cout);
+    INFO("END");
+    while(1)
+    {
+        std::string message = Utils::Log::GetLast();
+        if (message.empty())
+            break;
+        std::cout << message << std::endl;
+    }
     return 0;
 }

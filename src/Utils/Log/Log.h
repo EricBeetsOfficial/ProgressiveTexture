@@ -4,6 +4,7 @@
 #include <iostream>
 #include <format>
 #include <map>
+#include <queue>
 #include <mutex>
 
 using std::cout;
@@ -15,23 +16,15 @@ using std::map;
 #if NDEBUG
 # define DEBUG(...)
 # define INFO(...)
-# define WARN(...)
 #else
 # define DEBUG(...) Utils::Log::Debug("[", __FUNCTION__, ":", __LINE__, "] ", __VA_ARGS__);
 # define INFO(...)  Utils::Log::Info ("[", __FUNCTION__, ":", __LINE__, "] ", __VA_ARGS__);
-# define WARN(...)  Utils::Log::Warn ("[", __FUNCTION__, ":", __LINE__, "] ", __VA_ARGS__);
 #endif
 
+#define WARN(...)  Utils::Log::Warn ("[", __FUNCTION__, ":", __LINE__, "] ", __VA_ARGS__);
 #define ERROR(...)   Utils::Log::Error  ("[", __FILE__, " ", __FUNCTION__, ":", __LINE__, "] ", __VA_ARGS__);
 #define CONSOLE(...) Utils::Log::Console("[", __FUNCTION__, ":", __LINE__, "] ", __VA_ARGS__);
 
-#define PRINT(p, c, args)  {\
-                            std::unique_lock<std::mutex> lock(_mutex); \
-                            color(c); \
-                            cout << p; \
-                            ((cout << std::forward<Args>(args)), ...); \
-                            restore(); \
-                        }
 namespace Utils
 {
     class Log
@@ -44,6 +37,27 @@ namespace Utils
 
      private:
         inline static Level_t _level = Level_t::Debug;
+#pragma endregion
+
+#pragma region Mode
+     public:
+        enum class Mode_t {Classic, Queued};
+
+        static void Mode(Mode_t mode);
+
+        inline static std::string GetLast()
+        {
+            std::string message = "";
+            if (!_queue.empty())
+            {
+                message = _queue.front();
+                _queue.pop();
+            }
+            return message;
+        }
+     private:
+        inline static Mode_t _mode = Mode_t::Classic;
+        inline static std::queue<std::string> _queue;
 #pragma endregion
 
 #pragma region Ouputs

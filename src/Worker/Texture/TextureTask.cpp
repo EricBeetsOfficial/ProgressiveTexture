@@ -27,7 +27,7 @@ TextureTasks::TextureTasks(const std::string &texturePath) : _image{nullptr},
         }
         else
             ERROR(std::format("Loading texture failed: \"{}\"", texturePath));
-        std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+        // std::this_thread::sleep_for(std::chrono::milliseconds(2000));
         INFO("END loading ", texturePath);
         return true;
     }, true);
@@ -74,6 +74,7 @@ TextureTasks::TextureTasks(const std::string &texturePath) : _image{nullptr},
     {
         INFO("Create texture ", texturePath);
         // auto texture0 = Factory::Create<Texture<GraphicsAPI::OpenGL>>();
+        auto texture0 = Factory::Create<Texture>();
         return true;
     }, false);
 #endif
