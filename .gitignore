@@ -39,3 +39,6 @@ build/
 .vscode/
 src/_Misc
 output/
+
+# Generated
+*version.h
