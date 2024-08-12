@@ -2,7 +2,7 @@ project(Plugins)
 
 include_directories(.)
 include_directories(./Unity ./Common ./Unity/Unity ./Unity/RenderAPI ./Unity/gl3w)
-include_directories(../Utils ../Utils/Log ../Utils/Pattern)
+include_directories(../Utils ../Utils/Version ../Utils/Log ../Utils/Pattern)
 add_library(Plugins
     Common/ExportCommon.cpp
     Common/ExportLog.cpp

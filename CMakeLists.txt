@@ -19,8 +19,9 @@ message("Install to: " ${INSTALL_FOLDER})
 add_definitions(-DUSE_OPENGL)
 add_definitions(-DUSE_VULKAN=0)
 add_definitions(-DUSE_D3D=0)
-
 # add_definitions(-DTARGET_OS_WSA)
+
+include (cmake/version.cmake)
 
 add_subdirectory(src/Utils)
 add_subdirectory(src/Image)

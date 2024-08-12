@@ -3,6 +3,7 @@
 #include <RenderAPI.h>
 
 #include <Log.h>
+#include <Version.h>
 
 #include <list>
 #include <string>
@@ -12,6 +13,11 @@ extern RenderAPI* s_CurrentAPI;
 
 extern "C"
 {
+    const UNITY_INTERFACE_EXPORT char* UNITY_INTERFACE_API Version()
+    {
+        return VERSION;
+    }
+
     const UNITY_INTERFACE_EXPORT char* UNITY_INTERFACE_API BuildType()
     {
 #if NDEBUG
