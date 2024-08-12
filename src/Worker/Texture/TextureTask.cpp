@@ -8,7 +8,7 @@
 #include <DefaultImageIO.h>
 #include <DummyImageIO.h>
 #include <ResizerImageProcess.h>
-
+#include <Texture.h>
 #include <ThreadWorker.h>
 #include <Utils.h>
 
@@ -27,7 +27,7 @@ TextureTasks::TextureTasks(const std::string &texturePath) : _image{nullptr},
         }
         else
             ERROR(std::format("Loading texture failed: \"{}\"", texturePath));
-        std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+        // std::this_thread::sleep_for(std::chrono::milliseconds(2000));
         INFO("END loading ", texturePath);
         return true;
     }, true);
@@ -68,11 +68,13 @@ TextureTasks::TextureTasks(const std::string &texturePath) : _image{nullptr},
         return true;
     }, true);
 #endif
-#if 0
+#if 1
     // Create empty texture (non-threaded)
     addTask([&]()
     {
-        INFO("Create texture ", _texturePath);
+        INFO("Create texture ", texturePath);
+        // auto texture0 = Factory::Create<Texture<GraphicsAPI::OpenGL>>();
+        auto texture0 = Factory::Create<Texture>();
         return true;
     }, false);
 #endif

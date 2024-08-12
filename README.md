@@ -43,3 +43,27 @@ git submodule update
 ```sh
 drmemory -brief -batch -- ./Test/Debug/runUnitTests.exe
 ```
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+
+| Platform          |  Videolabs Store Asset                     |
+| ----------------- | ------------------------------------------ |
+| Windows           | [![Made with Unity]][LinkUnityStore]         |
+| UWP               | [![Made with Unity]][LinkUnityStore]         |
+| Android           | [![Made with Unity]][LinkUnityStore]         |
+| iOS               | [![Made with Unity]][LinkUnityStore]         |
+| macOS             | [![Made with Unity]][LinkUnityStore]         |
+
+[LinkUnityStore]: http://ericbeets.free.fr
+[Made with Unity]: https://img.shields.io/badge/Made%20with-Unity-57b9d3.svg?style=plastic&logo=unity
+
+<!-- cmake -DCMAKE_BUILD_TYPE=Release .. -->
+<!-- cmake --build . --config Release -->
+<!-- cmake --install . --config Release -->
+<!-- DUMPBIN -EXPORTS ../output/bin/Release/UnityPlugin.dll -->

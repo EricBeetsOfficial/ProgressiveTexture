@@ -35,5 +35,6 @@ int main()
         return false;
     });
     endl(cout);
+    INFO("END");
     return 0;
 }

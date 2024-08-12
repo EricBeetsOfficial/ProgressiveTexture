@@ -1,6 +1,25 @@
 #pragma once
 
 #include <Log.h>
+#include <sstream>
+
+template <typename T>
+std::string toString(T&& value)
+{
+    std::ostringstream oss;
+    oss << std::forward<T>(value);
+    return oss.str();
+}
+
+#define PRINT(p, c, args)  {\
+                            std::unique_lock<std::mutex> lock(_mutex); \
+                            color(c); \
+                            cout << p; \
+                            ((cout << std::forward<Args>(args)), ...); \
+                            if (Utils::Log::_mode == Utils::Log::Mode_t::Queued) \
+                                _queue.push(std::make_pair((toString(std::forward<Args>(args)) + ...), c)); \
+                            restore(); \
+                        }
 
 namespace Utils
 {
