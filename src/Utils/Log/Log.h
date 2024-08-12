@@ -45,9 +45,9 @@ namespace Utils
 
         static void Mode(Mode_t mode);
 
-        inline static std::string GetLast()
+        inline static std::pair<std::string, std::string> GetLast()
         {
-            std::string message = "";
+            std::pair<std::string, std::string> message ("", "");
             if (!_queue.empty())
             {
                 message = _queue.front();
@@ -57,7 +57,7 @@ namespace Utils
         }
      private:
         inline static Mode_t _mode = Mode_t::Classic;
-        inline static std::queue<std::string> _queue;
+        inline static std::queue<std::pair<std::string, std::string>> _queue;
 #pragma endregion
 
 #pragma region Ouputs

@@ -17,7 +17,7 @@ std::string toString(T&& value)
                             cout << p; \
                             ((cout << std::forward<Args>(args)), ...); \
                             if (Utils::Log::_mode == Utils::Log::Mode_t::Queued) \
-                                _queue.push((toString(std::forward<Args>(args)) + ...)); \
+                                _queue.push(std::make_pair((toString(std::forward<Args>(args)) + ...), c)); \
                             restore(); \
                         }
 
