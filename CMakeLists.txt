@@ -16,9 +16,9 @@ message("Output: " ${CMAKE_BINARY_DIR}/../output/)
 message("Output: " ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 message("Install to: " ${INSTALL_FOLDER})
 
-add_definitions(-DUSE_OPENGL)
-add_definitions(-DUSE_VULKAN=0)
-add_definitions(-DUSE_D3D=0)
+# add_definitions(-DUSE_OPENGL)
+# add_definitions(-DUSE_VULKAN=1)
+# add_definitions(-DUSE_D3D=0)
 # add_definitions(-DTARGET_OS_WSA)
 
 include (cmake/version.cmake)
@@ -33,7 +33,7 @@ include_directories(src/Worker src/Worker/Task src/Worker/Thread src/Worker/Text
 include_directories(src/Image src/Image/IO src/Image/IO/Default src/Image/IO/Dummy)
 include_directories(src/Image/Process src/Image/Process/Resizer src/Image/Process/Splitter)
 include_directories(src/Texture)
-include_directories(src/Utils src/Utils/Console src/Utils/Log src/Utils/Pattern)
+include_directories(src/Utils src/Utils/Console src/Utils/Log src/Utils/Pattern src/Utils/Platform)
 
 include(CTest)
 enable_testing()

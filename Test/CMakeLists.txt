@@ -32,7 +32,10 @@ set(SOURCES_LIST utils.cpp)
 BuildTest(TestUtils "${SOURCES_LIST}" "${LIBS_LIST}")
 
 add_executable(ImageTest images.cpp)
-target_link_libraries(ImageTest Image Utils)
+target_link_libraries(ImageTest Utils Image)
+
+find_package (OpenGL)
+message("Libs: " ${OPENGL_gl_LIBRARY})
 
 add_executable(ThreadTest thread.cpp)
-target_link_libraries(ThreadTest Worker Utils Image Texture)
+target_link_libraries(ThreadTest Utils Image Texture Worker ${OPENGL_gl_LIBRARY})

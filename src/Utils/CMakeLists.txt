@@ -1,4 +1,4 @@
 project(Utils)
 
-include_directories(. Console Log)
-add_library(Utils STATIC Console/Console.cpp Log/Log.cpp)
+include_directories(. Console Log Platform Platform/gl3w)
+add_library(Utils STATIC Console/Console.cpp Log/Log.cpp Platform/gl3w/gl3w.c Platform/gl3w/gl3w.h Platform/gl3w/glcorearb.h)

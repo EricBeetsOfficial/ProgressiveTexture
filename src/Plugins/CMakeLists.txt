@@ -1,21 +1,21 @@
 project(Plugins)
 
 include_directories(.)
-include_directories(./Unity ./Common ./Unity/Unity ./Unity/RenderAPI ./Unity/gl3w)
-include_directories(../Utils ../Utils/Version ../Utils/Log ../Utils/Pattern)
+include_directories(./Unity ./Export ./Unity/Unity ./Unity/RenderAPI ./Unity/gl3w)
+include_directories(../Utils ../Utils/Version ../Utils/Log ../Utils/Pattern ../Utils/Platform ../Utils/Delegate)
+include_directories(../Texture)
+include_directories(../Worker/Thread ../Worker/Texture ../Worker/Task ../Image ../Image/Process/Splitter)
 add_library(Plugins
-    Common/ExportCommon.cpp
-    Common/ExportLog.cpp
-    Common/ExportPlatform.cpp
-    Unity/ProgressiveTexturePlugin.cpp
-    Unity/gl3w/gl3w.c
-    Unity/gl3w/gl3w.h
-    Unity/gl3w/glcorearb.h
-    Unity/RenderAPI/RenderAPI.cpp
-    Unity/RenderAPI/RenderAPI_D3D11.cpp
-    Unity/RenderAPI/RenderAPI_D3D12.cpp
-    Unity/RenderAPI/RenderAPI_OpenGLCoreES.cpp
-    Unity/RenderAPI/RenderAPI_Vulkan.cpp
+    ./Export/ExportCommon.cpp
+    ./Export/ExportLog.cpp
+    ./Export/ExportPlatform.cpp
+    ./Export/ExportTexture.cpp
+    ./Unity/ProgressiveTexturePlugin.cpp
+    ./Unity/RenderAPI/RenderAPI.cpp
+    ./Unity/RenderAPI/RenderAPI_D3D11.cpp
+    ./Unity/RenderAPI/RenderAPI_D3D12.cpp
+    ./Unity/RenderAPI/RenderAPI_OpenGLCoreES.cpp
+    ./Unity/RenderAPI/RenderAPI_Vulkan.cpp
 )
 
 find_package (OpenGL)

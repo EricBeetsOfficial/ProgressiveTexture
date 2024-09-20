@@ -1,14 +1,18 @@
 #pragma once
 
+// #include <PlatformBase.h>
+
 #include <Log.h>
-#include <Context.h>
+#include <GraphicAPI.h>
+
+#include <Platform3d.h>
 
 // template <GraphicsAPI API>
 class Texture
 {
    friend class Factory;
  private:
-    Texture  ()
+    Texture  (GraphicsAPI API)
     {
         // _context = FactoryContext<API>::createContext();
         DEBUG(typeid(this).name());
@@ -21,21 +25,38 @@ class Texture
 // #ifdef USE_D3D
 //         DEBUG("D3D")
 // #endif
-        if constexpr (USE_OPENGL)
-        {
-            DEBUG("USE_OPENGL")
-        }
-        if constexpr (USE_VULKAN)
-        {
-            DEBUG("USE_VULKAN")
-        }
-        if constexpr (USE_D3D)
-        {
-            DEBUG("USE_D3D")
-        }
+
+        // if constexpr (SUPPORT_D3D11)
+        // {
+        //     DEBUG("SUPPORT_D3D11")
+        // }
+        // if constexpr (SUPPORT_D3D12)
+        // {
+        //     DEBUG("SUPPORT_D3D12")
+        // }
+        // if constexpr (SUPPORT_OPENGL_UNIFIED)
+        // {
+        //     DEBUG("SUPPORT_OPENGL_UNIFIED")
+        // }
+
+        // if constexpr (API == GraphicsAPI::OpenGL)
+        //     DEBUG("GraphicsAPI::OpenGL")
+        // else if constexpr (API == GraphicsAPI::D3D11)
+        //     DEBUG("GraphicsAPI::D3D11")
+        // else if constexpr (API == GraphicsAPI::D3D12)
+        //     DEBUG("GraphicsAPI::D3D12")
+        // else if constexpr (API == GraphicsAPI::Metal)
+        //     DEBUG("GraphicsAPI::Metal")
+        // else if constexpr (API == GraphicsAPI::Vulkan)
+        //     DEBUG("GraphicsAPI::Vulkan")
+        // else
+        //     DEBUG("Unknown GraphicsAPI")
     }
     ~Texture ( ){}
 
-//  private:
-//     Context* _context;
+ public:
+    void* getIdPtr();
+
+ private:
+    GLuint _glTexId;
 };

@@ -4,6 +4,8 @@ include_directories(. Task
                     ../Utils
                     ../Utils/Log
                     ../Utils/Pattern
+                    ../Utils/Platform
+                    ../Utils/Delegate
                     ../Image
                     ../Image/IO
                     ../Image/IO/Default

@@ -11,10 +11,13 @@
 #include <Texture.h>
 #include <ThreadWorker.h>
 #include <Utils.h>
+#include <Texture.h>
+#include <Callback.h>
 
-TextureTasks::TextureTasks(const std::string &texturePath) : _image{nullptr},
-                                                             ITaskWorker(texturePath)
+TextureTasks::TextureTasks(const GraphicsAPI api, const std::string &texturePath) : _image{nullptr},
+                                                                                    ITaskWorker(texturePath)
 {
+    _texture = Factory::Create<Texture>(api);
     // DEBUG();
     // Read image from disk (threaded)
     addTask([&, texturePath]()
@@ -48,17 +51,17 @@ TextureTasks::TextureTasks(const std::string &texturePath) : _image{nullptr},
     // Debug: Write resized image (threaded)
     addTask([&]()
     {
-        if ((_image != nullptr) && _image->available())
-        {
-            INFO("Write Image on disk ", _image->name());
-            FactoryImageIO<>()->write("output_" + Utils::FileName(_image->name()) + ".jpg", _image->pixels(), _image->width(), _image->height(), _image->bpp());
-        }
+        // if ((_image != nullptr) && _image->available())
+        // {
+        //     INFO("Write Image on disk ", _image->name());
+        //     FactoryImageIO<>()->write("output_" + Utils::FileName(_image->name()) + ".jpg", _image->pixels(), _image->width(), _image->height(), _image->bpp());
+        // }
         return true;
     }, true);
 #endif
 #if 1
     // Split in blocks (threaded)
-    addTask([&]()
+    addTask([&, texturePath]()
     {
         INFO("Split in blocks ", texturePath);
         _splitter = Factory::Create<SplitterImageProcess>();
@@ -68,13 +71,22 @@ TextureTasks::TextureTasks(const std::string &texturePath) : _image{nullptr},
         return true;
     }, true);
 #endif
-#if 1
+#if 0
     // Create empty texture (non-threaded)
-    addTask([&]()
+    addTask([&, texturePath]()
     {
         INFO("Create texture ", texturePath);
         // auto texture0 = Factory::Create<Texture<GraphicsAPI::OpenGL>>();
-        auto texture0 = Factory::Create<Texture>();
+        // auto texture0 = Factory::Create<Texture>();
+        _texture = Factory::Create<Texture>(api);
+        if (Utils::Delegate::ExportTexture::textureTestCreated != nullptr)
+        {
+            INFO("Send Texture ID ", texturePath);
+            Utils::Delegate::ExportTexture::textureTestCreated(_texture->getIdPtr());
+        }
+        else
+            INFO("Delegate::textureTestCreated is NULL");
+
         return true;
     }, false);
 #endif
@@ -105,7 +117,13 @@ TextureTasks::~TextureTasks()
     // DEBUG();
 }
 
-TextureTasksTest::TextureTasksTest(const std::string &texturePath)
+void* TextureTasks::getIdPtr()
+{
+    return _texture->getIdPtr();
+};
+
+
+TextureTasksTest::TextureTasksTest(const GraphicsAPI api, const std::string &texturePath)
 {
 }
 

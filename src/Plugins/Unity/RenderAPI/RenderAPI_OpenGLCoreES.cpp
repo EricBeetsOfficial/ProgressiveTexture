@@ -1,6 +1,8 @@
 #include <RenderAPI.h>
 #include <Platform3d.h>
 
+#include <Log.h>
+
 #if SUPPORT_OPENGL_UNIFIED
 
 class RenderAPI_OpenGLCoreES : public RenderAPI
@@ -27,11 +29,17 @@ void RenderAPI_OpenGLCoreES::CreateResources()
 	if (m_APIType == UnityGfxRenderer::kUnityGfxRendererOpenGLCore)
 	{
 #		if UNITY_WIN
+INFO("gl3wInit !!")
 		gl3wInit();
 #		endif
 	}
 #	endif // if SUPPORT_OPENGL_CORE
 	//assert(glGetError() == GL_NO_ERROR);
+INFO("gl3wInit !!")
+		if(gl3wInit())
+			ERROR("gl3wInit error")
+		else
+			INFO("gl3wInit OK")
 }
 
 
