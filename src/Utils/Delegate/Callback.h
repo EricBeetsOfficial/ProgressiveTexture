@@ -2,21 +2,14 @@
 
 #include <ExportInterface.h>
 #include <Log.h>
+#include <Delegate.h>
 
 namespace Utils
 {
-    #pragma pack(push, 1)
-    namespace Delegate
+    namespace Callback
     {
-        struct TextureParameter
-        {
-            void* texturePtr;
-            void* texId;
-            char guid[64];
-        };
-
         typedef void(INTERFACE_API* LogCallback) (const char* str, const char* color);
-        typedef void(INTERFACE_API* TextureCreated) (TextureParameter *);
+        typedef void(INTERFACE_API* TextureCreated) (Delegate::TextureParameter *);
 
         class ExportLog
         {
@@ -30,5 +23,4 @@ namespace Utils
             inline static TextureCreated textureCreated = nullptr;
         };
     }
-    #pragma pack(pop)
 }

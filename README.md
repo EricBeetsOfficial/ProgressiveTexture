@@ -47,7 +47,7 @@ This approach is especially crucial for large-scale projects and real-time appli
 - [ ] Dynamic block size
 - [ ] Mipmap
 - [ ] Gamma / Linear
-- [ ] Y Flip
+- [X] Y Flip
 
 
 <a id="clone"></a>
