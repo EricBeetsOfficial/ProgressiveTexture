@@ -18,15 +18,15 @@ extern "C"
 
     }
 
-    void INTERFACE_EXPORT INTERFACE_API LogRegisterCallback(Utils::Delegate::LogCallback callback)
+    void INTERFACE_EXPORT INTERFACE_API LogRegisterCallback(Utils::Callback::LogCallback callback)
     {
         // Force the queued log mode
         Utils::Log::Mode(Utils::Log::Mode_t::Queued);
-        Utils::Delegate::ExportLog::logCallback = callback;
+        Utils::Callback::ExportLog::logCallback = callback;
     }
 
     void INTERFACE_EXPORT INTERFACE_API LogUnregisterCallback()
     {
-        Utils::Delegate::ExportLog::logCallback = nullptr;
+        Utils::Callback::ExportLog::logCallback = nullptr;
     }
 }

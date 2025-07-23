@@ -51,8 +51,11 @@ TextureTasks::TextureTasks(const GraphicsAPI api, const std::string &texturePath
             resizer->run(_image, width, height);
             LOG_INFO("Resize image to", _image->width(), _image->height());
 
-            auto flipper = Factory::Create<FlipperImageProcess>();
-            flipper->run(_image);
+            if (_textureParameter->yFlip)
+            {
+                auto flipper = Factory::Create<FlipperImageProcess>();
+                flipper->run(_image);
+            }
         }
         return true;
     }, true);
@@ -76,11 +79,11 @@ TextureTasks::TextureTasks(const GraphicsAPI api, const std::string &texturePath
         LOG_DEBUG("GraphicsAPI ", (int)api)
         LOG_DEBUG("Texture size", _splitter->width(), _splitter->height(), _splitter->bpp());
         _texture = Factory::Create<Texture>(api, _splitter->width(), _splitter->height(), _splitter->bpp());
-        if (Utils::Delegate::ExportTexture::textureCreated != nullptr)
+        if (Utils::Callback::ExportTexture::textureCreated != nullptr)
         {
             LOG_INFO("Send Texture ID ");
             _textureParameter->texId = _texture->getIdPtr();
-            Utils::Delegate::ExportTexture::textureCreated(_textureParameter);
+            Utils::Callback::ExportTexture::textureCreated(_textureParameter);
         }
         else
             LOG_INFO("Delegate::textureCreated is NULL");

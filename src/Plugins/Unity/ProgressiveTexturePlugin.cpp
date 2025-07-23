@@ -107,7 +107,7 @@ static void INTERFACE_API OnRenderEvent(int eventID)
     else if (eventID == 2)
     {
         // Logs
-        if (Utils::Delegate::ExportLog::logCallback != nullptr)
+        if (Utils::Callback::ExportLog::logCallback != nullptr)
         {
             while(1)
             {
@@ -115,7 +115,7 @@ static void INTERFACE_API OnRenderEvent(int eventID)
                 if (message.first.empty())
                     break;
                 std::cout << message.first << std::endl;
-                Utils::Delegate::ExportLog::logCallback(message.first.c_str(), message.second.c_str());
+                Utils::Callback::ExportLog::logCallback(message.first.c_str(), message.second.c_str());
             }
         }
     }

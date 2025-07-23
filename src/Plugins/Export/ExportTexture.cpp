@@ -42,9 +42,9 @@ extern "C"
         workerTexture.addWorker(textureTask);
     }
 
-    void INTERFACE_EXPORT INTERFACE_API TextureCreatedCallback(Utils::Delegate::TextureCreated callback)
+    void INTERFACE_EXPORT INTERFACE_API TextureCreatedCallback(Utils::Callback::TextureCreated callback)
     {
         LOG_DEBUG("");
-        Utils::Delegate::ExportTexture::textureCreated = callback;
+        Utils::Callback::ExportTexture::textureCreated = callback;
     }
 }
