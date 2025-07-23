@@ -88,10 +88,13 @@ static void INTERFACE_API OnRenderEvent(int eventID)
     if (s_CurrentAPI == NULL || s_Graphics == NULL)
         return;
 
-    GLenum error = gl3wGetError();
-    if (error != GL_NO_ERROR)
+    if (s_CurrentAPI->getApiType() == kUnityGfxRendererOpenGLCore || s_CurrentAPI->getApiType() == kUnityGfxRendererOpenGLES30)
     {
-        LOG_ERROR("GetRenderEventFunc error: ", error);
+        GLenum error = gl3wGetError();
+        if (error != GL_NO_ERROR)
+        {
+            LOG_ERROR("GetRenderEventFunc error: ", error);
+        }
     }
 
     if (eventID == 1)
