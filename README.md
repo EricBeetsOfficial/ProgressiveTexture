@@ -18,7 +18,7 @@ Originally developed for **Unity** (with plans for future support on ***Unreal E
 
 This approach is especially crucial for large-scale projects and real-time applications such as **Augmented Reality (AR)** and **Virtual Reality (VR)**, where maintaining smooth performance and responsiveness is essential. By progressively loading textures, the system prevents noticeable hitches and ensures a seamless user experience, even with high-resolution or numerous textures.
 
-> 🔗 This repository focuses on the **native C++ side** of the texture loading system.  
+> 🔗 This repository focuses on the **native C++ side** of the texture loading system.
 > It is meant to be used alongside a separate repository that contains the **managed C# layer for Unity integration**, which handles runtime communication, lifecycle management, and higher-level texture API access within the Unity engine.
 
 <a id="roadmap"></a>
