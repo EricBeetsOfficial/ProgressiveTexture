@@ -33,4 +33,5 @@ target_link_libraries(UnityPlugin PUBLIC ${OPENGL_gl_LIBRARY})
 
 # install(FILES $<TARGET_RUNTIME_DLLS:UnityPlugin> TYPE BIN)
 # install(TARGETS $<TARGET_RUNTIME_DLLS:UnityPlugin> DESTINATION ${INSTALL_FOLDER})
+# set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/install" CACHE PATH "Install path" FORCE)
 install(TARGETS UnityPlugin DESTINATION ${INSTALL_FOLDER})

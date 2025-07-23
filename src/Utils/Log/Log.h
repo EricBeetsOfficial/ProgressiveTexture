@@ -14,16 +14,16 @@ using std::string;
 using std::map;
 
 #if NDEBUG
-# define DEBUG(...)
-# define INFO(...)
+# define LOG_DEBUG(...);
 #else
-# define DEBUG(...) Utils::Log::Debug("[", __FUNCTION__, ":", __LINE__, "] ", __VA_ARGS__);
-# define INFO(...)  Utils::Log::Info ("[", __FUNCTION__, ":", __LINE__, "] ", __VA_ARGS__);
+# define LOG_DEBUG(...) Utils::Log::Debug("[", __FUNCTION__, ":", __LINE__, "] ", __VA_ARGS__);
 #endif
 
-#define WARN(...)  Utils::Log::Warn ("[", __FUNCTION__, ":", __LINE__, "] ", __VA_ARGS__);
-#define ERROR(...)   Utils::Log::Error  ("[", __FILE__, " ", __FUNCTION__, ":", __LINE__, "] ", __VA_ARGS__);
-#define CONSOLE(...) Utils::Log::Console("[", __FUNCTION__, ":", __LINE__, "] ", __VA_ARGS__);
+#define LOG_CONSOLE(...)       Utils::Log::Console("[", __FUNCTION__, ":", __LINE__, "] ", __VA_ARGS__);
+#define LOG_INFO(...)          Utils::Log::Info   ("[", __FUNCTION__, ":", __LINE__, "] ", __VA_ARGS__);
+#define LOG_WARN(...)          Utils::Log::Warn   ("[", __FUNCTION__, ":", __LINE__, "] ", __VA_ARGS__);
+#define LOG_ERROR(...)         Utils::Log::Error  ("[", __FILE__, " ", __FUNCTION__, ":", __LINE__, "] ", __VA_ARGS__);
+#define ASSERT(condition, ...) Utils::Log::Assert (condition, "[", __FILE__, " ", __FUNCTION__, ":", __LINE__, "] ", __VA_ARGS__);
 
 namespace Utils
 {
@@ -75,15 +75,18 @@ namespace Utils
         static void Error(Args&&... args);
 
         template<typename... Args>
+        static void Assert(bool condition, Args&&... args);
+
+        template<typename... Args>
         static void Console(Args&&... args);
 #pragma endregion
 
 #pragma region Color
      private:
         template<typename... Args>
-        static void color(const string &color, std::ostream& out = cout);
+        static void colorChange(const string &color, std::ostream& out = cout);
 
-        static void restore(std::ostream& out = cout);
+        static void colorReset(std::ostream& out = cout);
 #pragma endregion
 
      private:

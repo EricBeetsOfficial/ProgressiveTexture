@@ -12,6 +12,7 @@ include_directories(. Task
                     ../Image/IO/Dummy
                     ../Image/Process/Resizer
                     ../Image/Process/Splitter
+                    ../Image/Process/Flipper
                     ../Image/Process/
                     ../Texture
                     Texture

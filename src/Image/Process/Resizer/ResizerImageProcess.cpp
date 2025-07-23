@@ -6,15 +6,15 @@
 
 ResizerImageProcess::ResizerImageProcess()
 {
-    // DEBUG("Ctr")
+    LOG_DEBUG("Ctr ResizerImageProcess")
 }
 
 ResizerImageProcess::~ResizerImageProcess()
 {
-    // DEBUG("Dtr")
+    LOG_DEBUG("Dtr ResizerImageProcess")
 }
 
-void ResizerImageProcess::run(std::shared_ptr<Image>& image,  int w, int h)
+void ResizerImageProcess::run(std::shared_ptr<Image>& image, int w, int h)
 {
     unsigned char* resized = (unsigned char*)malloc(sizeof(unsigned char) * w * h * image->bpp());
     stbir_resize_uint8_linear(image->pixels(), image->width(), image->height(), 0, resized, w, h, 0, (stbir_pixel_layout)image->bpp());

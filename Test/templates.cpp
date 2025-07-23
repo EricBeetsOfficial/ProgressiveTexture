@@ -14,40 +14,40 @@ public:
 public:
     void pubFOO()
     {
-        DEBUG();
+        LOG_DEBUG();
     }
     int pubFOO1(int a)
     {
-        DEBUG(a);
+        LOG_DEBUG(a);
         return 25;
     }
     bool pubFOO2()
     {
-        DEBUG();
+        LOG_DEBUG();
         return true;
     }
 
 protected:
     char proFOO(int a)
     {
-        DEBUG(a);
+        LOG_DEBUG(a);
         return 'z';
     }
 private:
     std::string priFOO(int a)
     {
-        DEBUG(a);
+        LOG_DEBUG(a);
         return "Hello";
     }
 
     void priFOO1(int a)
     {
-        DEBUG(a);
+        LOG_DEBUG(a);
     }
 
     void priFOO2()
     {
-        DEBUG();
+        LOG_DEBUG();
     }
 };
 

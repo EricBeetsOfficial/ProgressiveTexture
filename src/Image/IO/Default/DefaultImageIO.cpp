@@ -30,12 +30,12 @@ std::shared_ptr<Image> DefaultImageIO::open(const std::string& fileName)
 
 void DefaultImageIO::write(const std::string& fileName)
 {
-    DEBUG();
+    LOG_DEBUG();
     stbi_write_jpg(fileName.c_str(), _image->width(), _image->height(), _image->bpp(), _image->pixels(), _image->width() * _image->bpp());
 }
 
 void DefaultImageIO::write(const std::string& fileName, unsigned char* pixels, unsigned int width, unsigned int height, unsigned int bpp)
 {
-    DEBUG();
+    LOG_DEBUG("Write image to", fileName);
     stbi_write_jpg(fileName.c_str(), width, height, bpp, pixels, width * bpp);
 }

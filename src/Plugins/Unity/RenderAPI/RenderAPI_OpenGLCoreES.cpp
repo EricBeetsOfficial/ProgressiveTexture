@@ -20,26 +20,27 @@ private:
 
 RenderAPI* CreateRenderAPI_OpenGLCoreES(UnityGfxRenderer apiType)
 {
+    LOG_INFO("CreateRenderAPI_OpenGLCoreES");
 	return new RenderAPI_OpenGLCoreES(apiType);
 }
 
 void RenderAPI_OpenGLCoreES::CreateResources()
 {
-#	if SUPPORT_OPENGL_CORE
+#if SUPPORT_OPENGL_CORE
 	if (m_APIType == UnityGfxRenderer::kUnityGfxRendererOpenGLCore)
 	{
-#		if UNITY_WIN
-INFO("gl3wInit !!")
+#if UNITY_WIN
+LOG_INFO("gl3wInit !!")
 		gl3wInit();
-#		endif
+#endif
 	}
-#	endif // if SUPPORT_OPENGL_CORE
+#endif // if SUPPORT_OPENGL_CORE
 	//assert(glGetError() == GL_NO_ERROR);
-INFO("gl3wInit !!")
-		if(gl3wInit())
-			ERROR("gl3wInit error")
-		else
-			INFO("gl3wInit OK")
+// INFO("gl3wInit !!")
+// 		if(gl3wInit())
+// 			ERROR("gl3wInit error")
+// 		else
+// 			INFO("gl3wInit OK")
 }
 
 

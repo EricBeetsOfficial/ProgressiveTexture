@@ -14,9 +14,8 @@ GLuint glTexId;
 
 extern "C"
 {
-    INTERFACE_EXPORT void* INTERFACE_API TextureTest()
+    INTERFACE_EXPORT void INTERFACE_API LoadTexture(const char* filePath, Utils::Delegate::TextureParameter* textureParameter)
     {
-        DEBUG("");
         GraphicsAPI api = GraphicsAPI::None;
         switch (s_CurrentAPI->getApiType())
         {
@@ -37,21 +36,15 @@ extern "C"
                 api = GraphicsAPI::Vulkan;
                 break;
         }
-        auto textureTask = new TextureTasks(api, "C:/Users/eric_/Programming/Git/ProgressiveTexture/Test/images/cat.jpg");
+        LOG_DEBUG(filePath);
+        LOG_DEBUG("GraphicsAPI ", (int)api)
+        auto textureTask = new TextureTasks(api, filePath, textureParameter);
         workerTexture.addWorker(textureTask);
-        return textureTask->getIdPtr();
     }
 
-    void INTERFACE_EXPORT INTERFACE_API TextureRegisterCallback(Utils::Delegate::TextureTestCreated callback)
+    void INTERFACE_EXPORT INTERFACE_API TextureCreatedCallback(Utils::Delegate::TextureCreated callback)
     {
-        DEBUG("");
-        Utils::Delegate::ExportTexture::textureTestCreated = callback;
-    }
-
-    void INTERFACE_EXPORT INTERFACE_API TestSetTextureHandle(void* textureHandle)
-    {
-#if (defined (SUPPORT_OPENGL_UNIFIED) || defined(SUPPORT_OPENGL_CORE))
-	    glTexId = (GLuint)(size_t)(textureHandle);
-#endif
+        LOG_DEBUG("");
+        Utils::Delegate::ExportTexture::textureCreated = callback;
     }
 }

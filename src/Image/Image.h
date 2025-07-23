@@ -9,6 +9,7 @@ class Image
  private:
     Image  (const std::string& filePath, unsigned int width, unsigned int height, unsigned int bpp, unsigned char* pixels);
     Image  (unsigned int width, unsigned int height, unsigned int bpp, unsigned char* pixels);
+    Image  (const Image &);
     ~Image ( );
 
  public:

@@ -11,14 +11,15 @@ std::string toString(T&& value)
     return oss.str();
 }
 
-#define PRINT(p, c, args)  {\
+#define PRINT(level, c, args)  {\
                             std::unique_lock<std::mutex> lock(_mutex); \
-                            color(c); \
-                            cout << p; \
-                            ((cout << std::forward<Args>(args)), ...); \
-                            if (Utils::Log::_mode == Utils::Log::Mode_t::Queued) \
-                                _queue.push(std::make_pair((toString(std::forward<Args>(args)) + ...), c)); \
-                            restore(); \
+                            colorChange(c); \
+                            cout << level; \
+                            ((cout << " " << std::forward<Args>(args)), ...); \
+                            if (Utils::Log::_mode == Utils::Log::Mode_t::Queued) { \
+                                 _queue.push(std::make_pair(std::string(level) + ((std::string(" ") + toString(std::forward<Args>(args))) + ...), c)); \
+                            } \
+                            colorReset(); \
                         }
 
 namespace Utils
@@ -59,12 +60,19 @@ namespace Utils
     }
 
     template<typename... Args>
-    void Log::color(const string &color, std::ostream& out)
+    void Log::Assert(bool condition, Args&&... args)
+    {
+         if (_level >= Level_t::Error && !condition)
+            PRINT("[ASSERT]  ", "YELLOW", args);
+    }
+
+    template<typename... Args>
+    void Log::colorChange(const string &color, std::ostream& out)
     {
         cout << "\x1B["<< _colors[color] << "m";
     }
 
-    inline void Log::restore(std::ostream& out)
+    inline void Log::colorReset(std::ostream& out)
     {
         out << "\033[0m\t\t";
         endl(cout);

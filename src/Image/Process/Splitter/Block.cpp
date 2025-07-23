@@ -5,6 +5,7 @@
 
 Block::Block(int width, int height, int countX, int countY, std::shared_ptr<Image>& image)
 {
+    LOG_DEBUG("Ctr Block", width, height, image->bpp());
     // Pixels allocations
     unsigned char *pixels = (unsigned char*)malloc(width * height * image->bpp() * sizeof(unsigned char));
     // Create an Image for the current block
@@ -13,6 +14,8 @@ Block::Block(int width, int height, int countX, int countY, std::shared_ptr<Imag
     int rowStepBlock = width * image->bpp();
     int rowStepImage = image->width() * image->bpp();
     int offset = countX * rowStepBlock + countY * height * rowStepImage;
+    _xOffset = countX * width;
+    _yOffset = countY * height;
     // Buffer dereferencing
     unsigned char* dst = pixels;
     unsigned char* src = image->pixels() + offset;
@@ -23,7 +26,12 @@ Block::Block(int width, int height, int countX, int countY, std::shared_ptr<Imag
     // FactoryImageIO<>()->write("output_" + std::to_string(countX) + "_" + std::to_string(countY) + ".jpg", _image->pixels(), _image->width(), _image->height(), _image->bpp());
 }
 
+Block::Block(const Block &other)
+{
+    LOG_ERROR("Ctr Block copy");
+}
+
 Block::~Block()
 {
-    // DEBUG("Dtr")
+    LOG_DEBUG("Dtr Block")
 }

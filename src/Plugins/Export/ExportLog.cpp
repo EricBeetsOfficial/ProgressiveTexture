@@ -5,10 +5,10 @@ extern "C"
 {
     void INTERFACE_EXPORT INTERFACE_API LogTest()
     {
-        DEBUG("Debug");
-        INFO("Info");
-        WARN("Warn");
-        ERROR("Error");
+        LOG_DEBUG("Debug");
+        LOG_INFO("Info");
+        LOG_WARN("Warn");
+        LOG_ERROR("Error");
     }
 
     void INTERFACE_EXPORT INTERFACE_API LogLevel(int logLevel)
