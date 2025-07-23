@@ -1,4 +1,4 @@
-#include <IUnityInterface.h>
+#include <ExportInterface.h>
 #include <PlatformBase.h>
 #include <RenderAPI.h>
 
@@ -13,12 +13,12 @@ extern RenderAPI* s_CurrentAPI;
 
 extern "C"
 {
-    const UNITY_INTERFACE_EXPORT char* UNITY_INTERFACE_API Version()
+    const INTERFACE_EXPORT char* INTERFACE_API Version()
     {
         return VERSION;
     }
 
-    const UNITY_INTERFACE_EXPORT char* UNITY_INTERFACE_API BuildType()
+    const INTERFACE_EXPORT char* INTERFACE_API BuildType()
     {
 #if NDEBUG
         return "Release";
@@ -27,7 +27,7 @@ extern "C"
 #endif
     }
 
-    const UNITY_INTERFACE_EXPORT char* UNITY_INTERFACE_API SupportedContext()
+    const INTERFACE_EXPORT char* INTERFACE_API SupportedContext()
     {
         std::string supportedContext = "";
 #if SUPPORT_D3D11

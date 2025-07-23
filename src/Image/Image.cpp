@@ -7,7 +7,7 @@ Image::Image(const std::string& filePath, unsigned int width, unsigned int heigh
                                                                                                                               _bpp {bpp},
                                                                                                                               _pixels {pixels}
 {
-    // DEBUG()
+    LOG_DEBUG("Ctr Image");
 }
 
 Image::Image(unsigned int width, unsigned int height, unsigned int bpp, unsigned char* pixels) : _width {width},
@@ -16,7 +16,12 @@ Image::Image(unsigned int width, unsigned int height, unsigned int bpp, unsigned
                                                                                                  _pixels {pixels}
 
 {
-    // DEBUG()
+    LOG_DEBUG("Dtr Image")
+}
+
+Image::Image(const Image &other)
+{
+    LOG_ERROR("Ctr Image copy");
 }
 
 Image::~Image()

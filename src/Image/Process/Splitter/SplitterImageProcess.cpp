@@ -5,21 +5,22 @@
 
 SplitterImageProcess::SplitterImageProcess()
 {
-    // DEBUG("Ctr")
+    LOG_DEBUG("Ctr SplitterImageProcess")
 }
 
 SplitterImageProcess::~SplitterImageProcess()
 {
-    // DEBUG("Dtr")
+    LOG_DEBUG("Dtr SplitterImageProcess")
 }
 
 void SplitterImageProcess::run(std::shared_ptr<Image>& image,int blockSizeX, int blockSizeY)
 {
     if (!Utils::IsPowerOf2(image->width()) || !Utils::IsPowerOf2(image->height()))
     {
-        ERROR("Image has no power of dimensions");
+        LOG_ERROR("Image has no power of dimensions");
         return ;
     }
+    LOG_DEBUG("Splitter block size: ", blockSizeX, blockSizeY);
     int countX = image->width() / blockSizeX;
     int countY = image->height() / blockSizeY;
     for (int y = 0; y < countY; ++y)
@@ -27,4 +28,7 @@ void SplitterImageProcess::run(std::shared_ptr<Image>& image,int blockSizeX, int
         {
             _blocks.push_back(Factory::Create<Block>(blockSizeX, blockSizeY, x, y, image));
         }
+    _width = image->width();
+    _height = image->height();
+    _bpp = image->bpp();
 }

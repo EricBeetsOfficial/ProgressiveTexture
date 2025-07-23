@@ -16,10 +16,10 @@ int main()
 
     // workerTest1.addWorker(new TextureTasks("../Test/images/granular.jpg"));
     // workerTest1.addWorker(new TextureTasks("../Test/images/wave.jpg"));
-    workerTest1.addWorker(new TextureTasks("../Test/images/cat.jpg"));
+    workerTest1.addWorker(new TextureTasks(GraphicsAPI::OpenGL, "../Test/images/cat.jpg", new Utils::Delegate::TextureParameter()));
     // workerTest2.addWorker(new TextureTasks("q"));
     // workerTest3.addWorker(new TextureTasks("a"));
-    workerTest22.addWorker(new TextureTasksTest("tex2"));
+    workerTest22.addWorker(new TextureTasksTest(GraphicsAPI::None, "tex2"));
 
     Utils::loop([&]()
     {
@@ -29,12 +29,12 @@ int main()
         // workerTest22.tick();
         if (workerTest1.isComplete() && workerTest2.isComplete())
         {
-            INFO("Worker is completed: EXIT");
+            LOG_INFO("Worker is completed: EXIT");
             return true;
         }
         return false;
     });
     endl(cout);
-    INFO("END");
+    LOG_INFO("END");
     return 0;
 }

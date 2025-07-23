@@ -16,7 +16,6 @@ namespace Utils
         return rand() % (max - min) + min;
     }
 
-
     static bool IsPowerOf2(unsigned int value)
     {
         return (value & (value - 1)) == 0;
@@ -48,7 +47,6 @@ namespace Utils
             return smallest;
         return highest;
     }
-
 
     static std::string FileName(const std::string& filePath)
     {
