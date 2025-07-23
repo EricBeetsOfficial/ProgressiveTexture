@@ -37,6 +37,12 @@ This approach is especially crucial for large-scale projects and real-time appli
 - [ ] Metal
 - [ ] Vulkan
 
+### Source Loading Features
+- [X] File from disk
+- [ ] File from http request
+- [ ] File from encode data
+- [ ] File from raw data
+
 ### Supported Features
 - [ ] Dynamic block size
 - [ ] Mipmap
