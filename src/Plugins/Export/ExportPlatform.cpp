@@ -84,4 +84,9 @@ extern "C"
         *(str + instantciatedContext.size()) = '\0';
         return str;
     }
+
+    const UNITY_INTERFACE_EXPORT bool UNITY_INTERFACE_API IsAvailableContext()
+    {
+        return (s_CurrentAPI != NULL && s_CurrentAPI->getApiType() != kUnityGfxRendererNull);
+    }
 }

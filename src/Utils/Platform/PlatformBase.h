@@ -45,8 +45,8 @@
 		#define SUPPORT_D3D12 1
 	#endif
 #elif UNITY_WIN
-	#define SUPPORT_D3D11 1 // comment this out if you don't have D3D11 header/library files
-	#define SUPPORT_D3D12 1 // comment this out if you don't have D3D12 header/library files
+	// #define SUPPORT_D3D11 1 // comment this out if you don't have D3D11 header/library files
+	// #define SUPPORT_D3D12 1 // comment this out if you don't have D3D12 header/library files
 	#if !UNITY_WSA
 		#define SUPPORT_OPENGL_UNIFIED 1
 		#define SUPPORT_OPENGL_CORE 1

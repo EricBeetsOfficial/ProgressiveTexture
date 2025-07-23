@@ -8,7 +8,7 @@ set(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/output)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/output/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/output/libs)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/output/libs)
-set(INSTALL_FOLDER "../../UnityProgressiveTexture/Assets/Plugins/Windows")
+set(INSTALL_FOLDER "../../UnityProgressiveTexture/Packages/ProgressiveTexture/Runtime/Plugins/Windows")
 
 message("Build:  " ${CMAKE_BUILD_TYPE})
 message("Output: " ${CMAKE_BINARY_DIR}/../output/)
