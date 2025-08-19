@@ -8,14 +8,15 @@
 #include <DummyImageIO.h>
 #include <ResizerImageProcess.h>
 #include <FlipperImageProcess.h>
-#include <Texture.h>
+
+#include <GraphicTexture.h>
+
 #include <ThreadWorker.h>
 #include <Utils.h>
-#include <Texture.h>
 #include <Block.h>
 
-TextureTasks::TextureTasks(const GraphicsAPI api, const std::string &texturePath, const Utils::Delegate::TextureParameter* textureParameter) : _image{nullptr},
-                                                                                                                                          ITaskWorker(texturePath)
+TextureTasks::TextureTasks(const GraphicsAPI api, const void* device, const std::string &texturePath, const Utils::Delegate::TextureParameter* textureParameter) : _image{nullptr},
+                                                                                                                                                                    ITaskWorker(texturePath)
 {
     LOG_DEBUG("Ctr TextureTasks");
     LOG_DEBUG("GraphicsAPI ", (int)api)
@@ -44,49 +45,60 @@ TextureTasks::TextureTasks(const GraphicsAPI api, const std::string &texturePath
     {
         if ((_image != nullptr) && _image->available())
         {
-            LOG_DEBUG("Resize image ", _image->name(), _image->width(), _image->height());
+            LOG_DEBUG("Resize image ", _image->name(), _image->width(), _image->height(), _image->bpp());
             auto resizer = Factory::Create<ResizerImageProcess>();
             int width = Utils::SmallestPowerOf2(_image->width());
             int height = Utils::SmallestPowerOf2(_image->height());
             resizer->run(_image, width, height);
-            LOG_INFO("Resize image to", _image->width(), _image->height());
+            LOG_INFO("Resize image to", _image->width(), _image->height(), _image->bpp());
 
             if (_textureParameter->yFlip)
             {
+                LOG_DEBUG("Flipper image");
                 auto flipper = Factory::Create<FlipperImageProcess>();
                 flipper->run(_image);
             }
         }
+        else LOG_ERROR("Resize failed", "Image is not available")
         return true;
     }, true);
 #if 1
     // Split in blocks (threaded)
     addTask([&]()
     {
-        LOG_INFO("Split in blocks");
-        _splitter = Factory::Create<SplitterImageProcess>();
-        _splitter->run(_image, 128, 128);
-        // Release the image
+        if ((_image != nullptr) && _image->available())
+        {
+            LOG_INFO("Split in blocks");
+            _splitter = Factory::Create<SplitterImageProcess>();
+            _splitter->run(_image, 128, 128);
+            // Release the image
+        }
+        else LOG_ERROR("Split blocks failed", "Image is not available")
         _image.reset();
         return true;
     }, true);
 #endif
 #if 1
     // Create empty texture (non-threaded)
-    addTask([&, api]()
+    addTask([&, api, device]()
     {
-        LOG_INFO("Create graphic texture ");
-        LOG_DEBUG("GraphicsAPI ", (int)api)
-        LOG_DEBUG("Texture size", _splitter->width(), _splitter->height(), _splitter->bpp());
-        _texture = Factory::Create<Texture>(api, _splitter->width(), _splitter->height(), _splitter->bpp());
-        if (Utils::Callback::ExportTexture::textureCreated != nullptr)
+        if (_splitter != nullptr)
         {
-            LOG_INFO("Send Texture ID ");
-            _textureParameter->texId = _texture->getIdPtr();
-            Utils::Callback::ExportTexture::textureCreated(_textureParameter);
+            LOG_INFO("Create graphic texture ");
+            LOG_DEBUG("GraphicsAPI ", (int)api)
+            LOG_DEBUG("Texture size", _splitter->width(), _splitter->height(), _splitter->bpp());
+            _texture = GraphicTexture::createGraphicTexture(api, _splitter->width(), _splitter->height(), _splitter->bpp(), device);
+            if (Utils::Callback::ExportTexture::textureCreated != nullptr)
+            {
+                LOG_INFO("Send Texture ID ");
+                _textureParameter->texId = _texture->getIdPtr();
+                _textureParameter->dxPtr = _texture->getDxPtr();
+                Utils::Callback::ExportTexture::textureCreated(_textureParameter);
+            }
+            else
+                LOG_INFO("Delegate::textureCreated is NULL");
         }
-        else
-            LOG_INFO("Delegate::textureCreated is NULL");
+        else LOG_ERROR("Create graphic texture failed", "Splitter is not available")
         return true;
     }, false);
 #endif
@@ -94,7 +106,7 @@ TextureTasks::TextureTasks(const GraphicsAPI api, const std::string &texturePath
     // Upload blocks (non-threaded)
     addTask([&]()
     {
-        if (!_splitter->isEmpty())
+        if (_splitter != nullptr && !_splitter->isEmpty())
         {
             auto block = _splitter->getBlock();
             auto image = block->get();

@@ -36,4 +36,4 @@ include_directories(src/Utils src/Utils/Delegate src/Utils/Console src/Utils/Log
 
 # include(CTest)
 # enable_testing()
-# add_subdirectory(Test)
+add_subdirectory(Test)

@@ -15,7 +15,7 @@ std::string toString(T&& value)
                             std::unique_lock<std::mutex> lock(_mutex); \
                             colorChange(c); \
                             cout << level; \
-                            ((cout << " " << std::forward<Args>(args)), ...); \
+                            ((cout << std::forward<Args>(args)), ...); \
                             if (Utils::Log::_mode == Utils::Log::Mode_t::Queued) { \
                                  _queue.push(std::make_pair(std::string(level) + ((std::string(" ") + toString(std::forward<Args>(args))) + ...), c)); \
                             } \
