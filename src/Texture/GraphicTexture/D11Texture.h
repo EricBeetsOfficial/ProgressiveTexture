@@ -9,16 +9,16 @@
 class D11Texture : public GraphicTexture
 {
  public:
-    D11Texture(const void* device, unsigned int width, unsigned int height, unsigned int bpp);// : GraphicTexture(width, height, bpp) { LOG_WARN("Not yet implemented") }
-    ~D11Texture();// { LOG_WARN("Not yet implemented") }
+    D11Texture(const void* device, unsigned int width, unsigned int height, unsigned int bpp);
+    ~D11Texture();
 
  public:
-    void* getIdPtr();// { LOG_WARN("Not yet implemented") return nullptr; }
+    void* getIdPtr();
     void* getDxPtr();
 
  private:
-    void _upload(unsigned char* pixels, unsigned int width, unsigned int height, unsigned int xOffset, unsigned int yOffset);// { LOG_WARN("Not yet implemented") }
-    bool _check();// { LOG_WARN("Not yet implemented")  return false; }
+    void _upload(unsigned char* pixels, unsigned int width, unsigned int height, unsigned int xOffset, unsigned int yOffset);
+    bool _check();
     int _getInternalFormat(unsigned int bpp) const;
 
  private:

@@ -34,7 +34,7 @@ void* GLTexture::getIdPtr()
 
 void GLTexture::_upload(unsigned char* pixels, unsigned int width, unsigned int height, unsigned int xOffset, unsigned int yOffset)
 {
-    LOG_DEBUG("Texture upload", _glTexId, width, height, xOffset, yOffset);
+    LOG_DEBUG("Texture upload", _glTexId, width, height, xOffset, yOffset)
     glBindTexture(GL_TEXTURE_2D, (GLuint)(size_t)_glTexId);
     glTexSubImage2D(GL_TEXTURE_2D, 0, xOffset, yOffset, width, height, _bpp == 3 ? GL_RGB : GL_RGBA, GL_UNSIGNED_BYTE, pixels);
 }
@@ -44,7 +44,7 @@ bool GLTexture::_check()
     GLenum error = gl3wGetError();
     if (error != GL_NO_ERROR)
     {
-        LOG_ERROR("Texture::check: ", error);
+        LOG_ERROR("Texture::check: ", error)
         return false;
     }
     return true;

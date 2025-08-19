@@ -22,7 +22,7 @@ extern ThreadWorker<TextureTasks> workerTexture;
 // UnitySetInterfaces
 static void INTERFACE_API OnGraphicsDeviceEvent(UnityGfxDeviceEventType eventType)
 {
-    LOG_DEBUG("OnGraphicsDeviceEvent");
+    LOG_DEBUG("OnGraphicsDeviceEvent")
 	// Create graphics API implementation upon initialization
 	if (eventType == kUnityGfxDeviceEventInitialize)
 	{
@@ -49,7 +49,7 @@ static void INTERFACE_API OnGraphicsDeviceEvent(UnityGfxDeviceEventType eventTyp
 extern "C" void	INTERFACE_EXPORT INTERFACE_API UnityPluginLoad(IUnityInterfaces* unityInterfaces)
 {
     Utils::Log::Level(Utils::Log::Level_t::Debug);
-	LOG_INFO("UnityPluginLoad");
+	LOG_INFO("UnityPluginLoad")
 	s_UnityInterfaces = unityInterfaces;
 	s_Graphics = s_UnityInterfaces->Get<IUnityGraphics>();
 	s_Graphics->RegisterDeviceEventCallback(OnGraphicsDeviceEvent);
@@ -92,7 +92,7 @@ static void INTERFACE_API OnRenderEvent(int eventID)
         GLenum error = gl3wGetError();
         if (error != GL_NO_ERROR)
         {
-            LOG_ERROR("GetRenderEventFunc error: ", error);
+            LOG_ERROR("GetRenderEventFunc error: ", error)
         }
     }
 

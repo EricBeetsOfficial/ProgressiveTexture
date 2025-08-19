@@ -36,7 +36,7 @@ extern "C"
                 api = GraphicsAPI::Vulkan;
                 break;
         }
-        LOG_DEBUG(filePath);
+        LOG_DEBUG(filePath)
         LOG_DEBUG("GraphicsAPI ", (int)api)
         auto textureTask = new TextureTasks(api, s_CurrentAPI->getDevice(), filePath, textureParameter);
         workerTexture.addWorker(textureTask);
@@ -44,7 +44,7 @@ extern "C"
 
     void INTERFACE_EXPORT INTERFACE_API TextureCreatedCallback(Utils::Callback::TextureCreated callback)
     {
-        LOG_DEBUG("");
+        LOG_DEBUG("")
         Utils::Callback::ExportTexture::textureCreated = callback;
     }
 }

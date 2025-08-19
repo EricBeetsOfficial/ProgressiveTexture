@@ -20,7 +20,7 @@ private:
 
 RenderAPI* CreateRenderAPI_OpenGLCoreES(UnityGfxRenderer apiType)
 {
-    LOG_INFO("CreateRenderAPI_OpenGLCoreES");
+    LOG_INFO("CreateRenderAPI_OpenGLCoreES")
 	return new RenderAPI_OpenGLCoreES(apiType);
 }
 

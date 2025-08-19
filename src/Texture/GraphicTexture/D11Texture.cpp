@@ -30,7 +30,7 @@ D11Texture::D11Texture(const void* device, unsigned int width, unsigned int heig
 
     HRESULT hr = _device->CreateTexture2D(&desc, NULL, &_tex2D);
     if (FAILED(hr)) {
-        LOG_ERROR("Error create texture");
+        LOG_ERROR("Error create texture")
         _failed = true;
         return;
     }
@@ -43,7 +43,7 @@ D11Texture::D11Texture(const void* device, unsigned int width, unsigned int heig
     shaderResourceViewDesc.Texture2D.MipLevels = 1;
     HRESULT hrr = _device->CreateShaderResourceView(_tex2D, &shaderResourceViewDesc, &_shaderResourceView);
     if (FAILED(hrr)) {
-        LOG_ERROR("Error create resource view");
+        LOG_ERROR("Error create resource view")
         _tex2D->Release();
         _failed = true;
         return;
@@ -76,7 +76,7 @@ int D11Texture::_getInternalFormat(unsigned int bpp) const
 void D11Texture::_upload(unsigned char* pixels, unsigned int width, unsigned int height, unsigned int xOffset, unsigned int yOffset)
 {
     if (_failed) {
-        LOG_ERROR("Upload Texture D3D11 failed cause texture creation failed");
+        LOG_ERROR("Upload Texture D3D11 failed cause texture creation failed")
         return;
     }
     D3D11_BOX destRegion;

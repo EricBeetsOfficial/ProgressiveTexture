@@ -23,7 +23,7 @@
             /*DEBUG("Find ", #method_name);*/ \
             return obj->##method_name(std::forward<Args>(args)...); \
         } else { \
-            LOG_ERROR(#method_name, " does not exist."); \
+            LOG_ERROR(#method_name, " does not exist.") \
             return false; \
         } \
     }

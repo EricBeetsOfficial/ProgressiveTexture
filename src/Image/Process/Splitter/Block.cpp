@@ -5,7 +5,7 @@
 
 Block::Block(int width, int height, int countX, int countY, std::shared_ptr<Image>& image)
 {
-    LOG_DEBUG("Ctr Block", width, height, image->bpp());
+    LOG_DEBUG("Ctr Block", width, height, image->bpp())
     // Pixels allocations
     unsigned char *pixels = (unsigned char*)malloc(width * height * image->bpp() * sizeof(unsigned char));
     // Create an Image for the current block
@@ -28,7 +28,7 @@ Block::Block(int width, int height, int countX, int countY, std::shared_ptr<Imag
 
 Block::Block(const Block &other)
 {
-    LOG_ERROR("Ctr Block copy");
+    LOG_ERROR("Ctr Block copy")
 }
 
 Block::~Block()
