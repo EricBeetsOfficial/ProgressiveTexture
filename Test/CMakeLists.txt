@@ -7,7 +7,8 @@ FetchContent_Declare(
   googletest
   URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
 )
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+# set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+set(gtest_force_shared_crt ON)
 FetchContent_MakeAvailable(googletest)
 
 # Build function
@@ -34,8 +35,15 @@ BuildTest(TestUtils "${SOURCES_LIST}" "${LIBS_LIST}")
 add_executable(ImageTest images.cpp)
 target_link_libraries(ImageTest Utils Image)
 
+include_directories(../src/Texture/GraphicTexture)
+
 find_package (OpenGL)
 message("Libs: " ${OPENGL_gl_LIBRARY})
 
 add_executable(ThreadTest thread.cpp)
-target_link_libraries(ThreadTest Utils Image Texture Worker ${OPENGL_gl_LIBRARY})
+target_link_libraries(ThreadTest Utils Image Texture Worker Plugins ${OPENGL_gl_LIBRARY})
+
+add_executable(TextureTest texture.cpp)
+target_link_libraries(TextureTest Utils Image Texture Worker Plugins ${OPENGL_gl_LIBRARY})
+
+add_subdirectory(SDL)

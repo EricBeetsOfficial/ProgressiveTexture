@@ -17,7 +17,7 @@ void SplitterImageProcess::run(std::shared_ptr<Image>& image,int blockSizeX, int
 {
     if (!Utils::IsPowerOf2(image->width()) || !Utils::IsPowerOf2(image->height()))
     {
-        LOG_ERROR("Image has no power of dimensions");
+        LOG_ERROR("Image has no power of 2 dimensions");
         return ;
     }
     LOG_DEBUG("Splitter block size: ", blockSizeX, blockSizeY);

@@ -15,6 +15,7 @@ include_directories(. Task
                     ../Image/Process/Flipper
                     ../Image/Process/
                     ../Texture
+                    ../Texture/GraphicTexture
                     Texture
                     Task
                     Thread)

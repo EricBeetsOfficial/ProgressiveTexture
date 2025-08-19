@@ -7,7 +7,6 @@
 
 #include <Callback.h>
 #include <Factory.h>
-#include <Texture.h>
 #include <ThreadWorker.h>
 #include <TextureTask.h>
 

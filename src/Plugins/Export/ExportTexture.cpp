@@ -38,7 +38,7 @@ extern "C"
         }
         LOG_DEBUG(filePath);
         LOG_DEBUG("GraphicsAPI ", (int)api)
-        auto textureTask = new TextureTasks(api, filePath, textureParameter);
+        auto textureTask = new TextureTasks(api, s_CurrentAPI->getDevice(), filePath, textureParameter);
         workerTexture.addWorker(textureTask);
     }
 

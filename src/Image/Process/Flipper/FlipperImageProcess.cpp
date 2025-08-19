@@ -19,7 +19,7 @@ void FlipperImageProcess::run(std::shared_ptr<Image>& image)
     int rowStepImage = image->width() * image->bpp();
     unsigned char* dst = pixels + rowStepImage * (image->height() - 1);
     unsigned char* src = image->pixels();
-    for (int y = 0; y < image->height(); ++y)
+    for (int y = 1; y < image->height(); ++y)
     {
         dst = pixels + rowStepImage * (image->height() - 1 - y);
         src += rowStepImage;
